@@ -73,7 +73,7 @@ nav a:hover::before {
     width: 100%;
   }
 
-  footer{
+footer{
     bottom: 0;
     position: fixed;
     width: 100%;
