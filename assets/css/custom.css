@@ -1,0 +1,28 @@
+
+a:hover {
+    color: black;
+}
+
+a:link { 
+    text-decoration: none; 
+} 
+  
+
+/* CUSTOM */
+
+/* bright things */
+
+.wild-font-color {
+    color:rgb(103, 24, 231, .5);
+}
+
+.wild-background-color {
+    background-color: rgb(152, 231, 24, .5);
+}
+
+/* cell borders */
+
+.custom-cell-border {
+    border: 2px solid rgb(152, 231, 24, .5);
+    border-radius: 5px;
+}
