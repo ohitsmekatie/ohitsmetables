@@ -6,7 +6,6 @@ a:hover {
 a:link { 
     text-decoration: none; 
 } 
-  
 
 /* CUSTOM */
 
@@ -25,4 +24,9 @@ a:link {
 .custom-cell-border {
     border: 2px solid rgb(152, 231, 24, .5);
     border-radius: 5px;
+}
+
+.active {
+    background-color: rgb(152, 231, 24, .5);
+
 }
