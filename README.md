@@ -1,3 +1,3 @@
 # ohitsmetables
 
-A very basic website collecting tables for game prep.
+A very basic website for my prep tables & maps
