@@ -12,16 +12,16 @@ a:link {
 /* bright things */
 
 .wild-font-color {
-    color:rgb(103, 24, 231, .5);
+    color:rgba(11, 3, 24, 0.5);
 }
 
 .wild-background-color {
-    background-color: rgb(152, 231, 24, .5);
+    background-color: rgba(71, 66, 71, 0.5);
 }
 
 /* cell borders */
 
 .custom-cell-border {
-    border: 2px solid rgb(152, 231, 24, .5);
+    border: 2px solid rgba(131, 9, 88, 0.5);
     border-radius: 5px;
 }
