@@ -1,7 +1,7 @@
 // static/js/loadComponents.js
 document.addEventListener("DOMContentLoaded", function () {
     // Load the navigation
-    fetch('static/html/nav.html')
+    fetch('/proejct-folder/static/html/nav.html')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
