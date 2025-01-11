@@ -1,7 +1,7 @@
 // loadNavigation.js
 document.addEventListener("DOMContentLoaded", function () {
     // Load the navigation
-    fetch('nav.html')
+    fetch('/html/nav.html')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     // Load the footer
-    fetch('footer.html')
+    fetch('/html/footer.html')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
