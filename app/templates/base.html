@@ -16,17 +16,21 @@
         <a class="navbar-brand" href="/">ohitsmecontent</a>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
+            <a class="nav-link {% if request.path == '/random-encounters' %}active{% endif %}" href="/random-encounters">Random Encounters</a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/characters' %}active{% endif %}" href="/characters">Characters</a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/quests' %}active{% endif %}" href="/quests">Short Side Quests</a>
           </li>
+   
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/random-encounters' %}active{% endif %}" href="/random-encounters">Random Encounters</a>
+            <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
           </li>
+
         </ul>        
       </div>
     </nav>
