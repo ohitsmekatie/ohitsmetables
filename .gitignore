@@ -1,7 +1,7 @@
 __pycache__/
 *.pyc
 .env
-# credentials.json
+credentials.json
 *.sqlite3
 staticfiles/
 node_modules/
