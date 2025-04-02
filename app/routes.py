@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request
-from .sheets import get_random_encounter
+from .sheets import get_random_encounter, get_random_lore
 
 main = Blueprint("main", __name__)
 
@@ -35,3 +35,11 @@ def random_encounter():
         print("Error:", e)
         return jsonify({"error": str(e)}), 500
 
+@main.route("/lore")
+def lore():
+    try:
+        lore_entries = get_random_lore()
+        return jsonify(lore_entries)
+    except Exception as e:
+        print("Error loading lore:", e)
+        return jsonify([]), 500

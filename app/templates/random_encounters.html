@@ -2,7 +2,7 @@
 
 {% block content %}
   <div class="text-center">
-    <h1 class="mb-4">Random Encounter Generator</h1>
+    <h1 class="mb-4 display-5"><i class="fas fa-hat-wizard me-2"></i>Summon a Random Encounter</h1>
 
     <div class="row justify-content-center mb-3">
       <div class="col-md-3">
@@ -23,24 +23,38 @@
       </div>
     </div>
 
-    <button id="getEncounter" class="btn btn-primary mb-4">Give me a random encounter</button>
-    <div id="encounterDisplay" class="encounter-card d-none mt-4"></div>
+    <!-- Mystic Encounter Button -->
+    <button id="generateEncounterBtn" class="mb-4">
+      <i class="fas fa-wand-sparkles me-2"></i> Summon Encounter
+    </button>
 
+    <!-- Encounter Display (parchment style) -->
+    <div id="encounterDisplay" class="encounter-card d-none mt-4"></div>
   </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-  document.getElementById("getEncounter").addEventListener("click", async () => {
+  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
     const biome = document.getElementById("biome").value;
     const difficulty = document.getElementById("difficulty").value;
 
-    const res = await fetch(`/random-encounter?biome=${biome}&difficulty=${difficulty}`);
-    const data = await res.json();
+    try {
+      const res = await fetch(`/random-encounter?biome=${biome}&difficulty=${difficulty}`);
+      const data = await res.json();
 
-    const display = document.getElementById("encounterDisplay");
-    display.textContent = data.encounter || data.error;
-    display.classList.remove("d-none");
+      const display = document.getElementById("encounterDisplay");
+      if (display) {
+        display.textContent = data.encounter || data.error;
+        display.classList.remove("d-none");
+        display.classList.add("show");
+      } else {
+        console.error("Encounter display element not found.");
+      }
+    } catch (err) {
+      console.error("Error fetching encounter:", err);
+    }
   });
 </script>
 {% endblock %}
+

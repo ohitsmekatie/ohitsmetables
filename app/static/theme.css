@@ -64,3 +64,53 @@ select.form-select {
   margin: 0 auto;
   transition: all 0.4s ease;
 }
+
+/* === Mystic Button Style === */
+#generateEncounterBtn {
+  background: linear-gradient(145deg, #6d28d9, #9333ea);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #8b5cf6;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.5px;
+}
+
+#generateEncounterBtn:hover {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  box-shadow: 0 0 20px #eab308, 0 0 30px #8b5cf6;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.lore-sidebar {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  width: 240px;
+  padding: 1.5rem;
+  background-color: #2a2139;
+  color: #f4f4f4;
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  z-index: 1000;
+  font-family: 'Crimson Pro', serif;
+  line-height: 1.6;
+  text-align: center; /* ✅ Center the text */
+}
+
+
+.lore-sidebar h5 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #8b5cf6;
+  padding-bottom: 0.5rem;
+}
+
+.lore-sidebar ul li {
+  margin-bottom: 0.5rem; /* ✅ space between lines */
+}

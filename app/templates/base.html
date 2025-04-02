@@ -2,46 +2,99 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ohitsmekatie</title>
+    <title>ohitsmecontent</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap + Font Awesome + Theme -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/theme.css">
-  </head>   
+  </head>
+
   <body class="d-flex flex-column min-vh-100">
 
     {% set request = request or {} %}
 
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/">ohitsmecontent</a>
+        <a class="navbar-brand" href="/">Game Prep Galore</a>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link {% if request.path == '/random-encounters' %}active{% endif %}" href="/random-encounters">
-            <i class="fas fa-hat-wizard me-1"></i> Random Encounters</a></li>
-          <li class="nav-item"><a class="nav-link {% if request.path == '/characters' %}active{% endif %}" href="/characters">
-            <i class="fas fa-users me-1"></i> Characters</a></li>
-          <li class="nav-item"><a class="nav-link {% if request.path == '/quests' %}active{% endif %}" href="/quests">
-            <i class="fas fa-dungeon me-1"></i> Side Quests</a></li>
-          <li class="nav-item"><a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">
-              <i class="fas fa-scroll me-1"></i> About</a></li>
-        </ul>              
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/random-encounters' %}active{% endif %}" href="/random-encounters">
+              <i class="fas fa-hat-wizard me-1"></i> Random Encounters</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/characters' %}active{% endif %}" href="/characters">
+              <i class="fas fa-users me-1"></i> Characters</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/quests' %}active{% endif %}" href="/quests">
+              <i class="fas fa-dungeon me-1"></i> Side Quests</a>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">
+              <i class="fas fa-scroll me-1"></i> About</a>
+          </li>
+        </ul>
       </div>
     </nav>
 
+    <!-- Page content -->
     <main class="flex-grow-1">
       <div class="container py-5">
         {% block content %}{% endblock %}
       </div>
     </main>
 
-    <footer class="bg-dark text-light py-3">
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3 mt-auto">
       <div class="container text-center">
         <small>&copy; 2025 ohitsmekatie. All rights reserved.</small>
       </div>
     </footer>
 
+    <!-- Lore Sidebar -->
+    <div id="loreSidebar" class="lore-sidebar d-none d-md-block">
+      <h5 class="text-warning"><i class="fas fa-brain me-2"></i>Random Inspiration!</h5>
+      <ul id="loreList" class="list-unstyled small">
+        <li>🪄 Summoning scrolls from the ether...</li>
+      </ul>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     {% block scripts %}{% endblock %}
+
+    <!-- Lore Sidebar Loader -->
+    <script>
+      window.addEventListener("DOMContentLoaded", async () => {
+        const loreList = document.getElementById("loreList");
+        if (!loreList) return;
+
+        try {
+          const res = await fetch("/lore");
+          const lore = await res.json();
+
+          loreList.innerHTML = ""; // Clear placeholder
+
+          lore.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            loreList.appendChild(li);
+          });
+        } catch (err) {
+          console.error("Failed to load lore:", err);
+          loreList.innerHTML = "<li>🧙 Lore could not be summoned.</li>";
+        }
+      });
+    </script>
+
   </body>
 </html>
