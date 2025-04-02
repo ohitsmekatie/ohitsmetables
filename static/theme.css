@@ -1,0 +1,66 @@
+/* === FANTASY THEME === */
+body {
+  background-color: #1e1e2f;
+  color: #f4f4f4;
+  font-family: 'Crimson Pro', serif;
+}
+
+.navbar {
+  background-color: #2a2139 !important;
+}
+
+.nav-link, .navbar-brand {
+  color: #f4f4f4 !important;
+}
+
+.nav-link.active {
+  color: #eab308 !important;
+  font-weight: bold;
+  border-bottom: 2px solid #eab308;
+}
+
+.btn-primary {
+  background-color: #8b5cf6;
+  border-color: #8b5cf6;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #a78bfa;
+  box-shadow: 0 0 12px #8b5cf6;
+}
+
+.alert-info {
+  background-color: #2a2139;
+  border-color: #8b5cf6;
+  color: #f4f4f4;
+}
+
+.card {
+  background-color: #2a2139;
+  border: 1px solid #8b5cf6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+}
+
+select.form-select {
+  background-color: #2a2139;
+  color: #f4f4f4;
+  border: 1px solid #8b5cf6;
+}
+
+.encounter-card {
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  background-color: #f9f3e9;
+  color: #2a2139;
+  padding: 1.5rem;
+  border: 3px double #8b5cf6;
+  border-radius: 12px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  max-width: 600px;
+  margin: 0 auto;
+  transition: all 0.4s ease;
+}
