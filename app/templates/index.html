@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="text-center">
+    <h1 class="mb-4">Random Encounter Generator</h1>
+
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-3">
+        <select id="biome" class="form-select">
+          <option value="">Any Biome</option>
+          <option value="Forest">Forest</option>
+          <option value="Cave">Cave</option>
+          <option value="Misc">Misc</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select id="difficulty" class="form-select">
+          <option value="">Any Difficulty</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="getEncounter" class="btn btn-primary mb-4">Give me a random encounter</button>
+    <div id="encounterDisplay" class="alert alert-info d-none"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("getEncounter").addEventListener("click", async () => {
+    const biome = document.getElementById("biome").value;
+    const difficulty = document.getElementById("difficulty").value;
+
+    const res = await fetch(`/random-encounter?biome=${biome}&difficulty=${difficulty}`);
+    const data = await res.json();
+
+    const display = document.getElementById("encounterDisplay");
+    display.textContent = data.encounter || data.error;
+    display.classList.remove("d-none");
+  });
+</script>
+{% endblock %}
+
