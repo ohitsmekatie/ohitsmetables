@@ -1,10 +1,9 @@
-[project]
-name = "random-encounter-app"
+[tool.poetry]
+name = "ohitsmetables"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "katie",email = "katie.sipos@gmail.com"}
-]
+description = "A whimsical RPG tool generator"
+authors = ["Katie <you@example.com>"]
+
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

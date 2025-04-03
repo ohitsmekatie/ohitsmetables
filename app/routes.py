@@ -9,10 +9,27 @@ from .sheets import (
     get_random_landmark
 )
 
+import subprocess
+from datetime import datetime
+
 main = Blueprint("main", __name__)
+
+def get_last_updated():
+    try:
+        result = subprocess.check_output(
+            ["git", "log", "-1", "--format=%cd", "--date=iso"],
+            stderr=subprocess.DEVNULL
+        ).decode("utf-8").strip()
+        dt = datetime.fromisoformat(result)
+        return dt.strftime("%B %d, %Y at %I:%M %p")
+    except Exception as e:
+        print("Failed to get last updated date:", e)
+        return "Unknown"
 
 @main.route("/")
 def index():
+    last_updated = get_last_updated()
+    return render_template("landing.html", last_updated=last_updated)
     return render_template("landing.html")
 
 @main.route("/about")
