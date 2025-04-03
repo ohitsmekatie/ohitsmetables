@@ -21,21 +21,27 @@
 
       const display = document.getElementById("characterDisplay");
       if (display) {
-        display.innerHTML = `
-          <h5 class="mb-3">${data["First Name"]} ${data["Last Name"]} — <em>${data["Race"]}</em></h5>
-          <p><strong>Physical:</strong> ${data["Physical Description"]}</p>
-          <p><strong>Personality:</strong> ${data["Personality"]}</p>
-          <p><strong>Quirk:</strong> ${data["Quirk"]}</p>
-          <p><strong>Motivation:</strong> ${data["Motivation"]}</p>
-          <p><strong>Job or Purpose:</strong> ${data["Job"]}</p>
-          <p><strong>Background:</strong> ${data["Background"]}</p>
-        `;
+        const output = [];
+
+        output.push(`<h4 class="fw-bold mb-3"> ${data["First Name"]} ${data["Last Name"]} — <em>${data["Race"]}</h4>`);
+        output.push(`<p><strong>🧍 Appearance:</strong> ${data["Physical Description"]}</p>`);
+        output.push(`<hr><p><strong>🎭 Personality:</strong> ${data["Personality"]}</p>`);
+        output.push(`<hr><p><strong>🌀 Quirk:</strong> ${data["Quirk"]}</p>`);
+        output.push(`<hr><p><strong>🧠 Motivation:</strong> ${data["Motivation"]}</p>`);
+        output.push(`<hr><p><strong>🛠️ Role:</strong> ${data["Job"]}</p>`);
+        output.push(`<hr><p><strong>📜 Background:</strong> ${data["Background"]}</p>`);
+
+        display.innerHTML = output.join("");
         display.classList.remove("d-none");
         display.classList.add("show");
       }
     } catch (err) {
       console.error("Error fetching character:", err);
+      const display = document.getElementById("characterDisplay");
+      display.innerHTML = `<p class="text-danger">⚠️ Failed to load character details.</p>`;
+      display.classList.remove("d-none");
     }
   });
 </script>
+
 {% endblock %}

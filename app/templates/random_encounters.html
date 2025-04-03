@@ -44,7 +44,7 @@
       const display = document.getElementById("encounterDisplay");
       if (display) {
         display.innerHTML = `
-          <div class="mb-2"><strong>${data.encounter}</strong></div>
+          <div><h5 class="fw-bold mb-3">${data.encounter}</h5></div>
           <div class="text-muted small fst-italic">${data.flavor}</div>
         `;
         display.classList.remove("d-none");
