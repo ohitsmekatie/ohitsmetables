@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center">
+  <h1 class="display-5 mb-4 text-shadow-light">
+    <i class="fas fa-dungeon me-2"></i> Room Dressing
+  </h1>
+
+  <div class="form-check form-check-inline mt-4">
+    <input class="form-check-input" type="checkbox" id="includeTreasure">
+    <label class="form-check-label" for="includeTreasure">Include Treasure</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="includeTrap">
+    <label class="form-check-label" for="includeTrap">Include Trap</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="includeSpecial">
+    <label class="form-check-label" for="includeSpecial">Include Special Element</label>
+  </div>
+
+  <div class="mt-4">
+    <button class="mystic-button" onclick="getRoomDressing()">
+      <i class="fas fa-hat-wizard me-2"></i> Dress My Room
+    </button>
+  </div>
+
+  <div id="roomResult" class="encounter-card mt-5 p-4 animate-fade-in-delay" style="display: none;"></div>
+</div>
+
+<script>
+  async function getRoomDressing() {
+    const treasure = document.getElementById("includeTreasure").checked;
+    const trap = document.getElementById("includeTrap").checked;
+    const special = document.getElementById("includeSpecial").checked;
+
+    const res = await fetch(`/room-dress?treasure=${treasure}&trap=${trap}&special=${special}`);
+    const data = await res.json();
+
+    const output = [];
+
+    output.push(`<p class="fw-bold fs-5 mb-1">🪑 Room Dressing</p>`);
+    data.room_items.forEach(item => {
+    output.push(`<p class="mb-1"> ${item}</p>`);
+    });
+
+    if (data.room_vibe) {
+    output.push(`<p class="fw-bold fs-5 mb-1">🌀 Room Vibe</p>`);
+    output.push(`<p class="mb-1">${data.room_vibe}</p>`);
+    }
+    if (data.treasure) {
+    output.push(`<p class="fw-bold fs-5 mb-1">💰 Treasure</p>`);
+    output.push(`<p class="mb-1">${data.treasure}</p>`);
+    }
+    if (data.trap) {
+    output.push(`<p class="fw-bold fs-5 mb-1">⚠️ Trap</p>`);
+    output.push(`<p class="mb-1">${data.trap}</p>`);
+    }
+    if (data.special) {
+    output.push(`<p class="fw-bold fs-5 mb-1">✨ Special Element</p>`);
+    output.push(`<p class="mb-1">${data.special}</p>`);
+    }
+
+    const resultDiv = document.getElementById("roomResult");
+    resultDiv.innerHTML = output.join("");
+    resultDiv.style.display = "block";
+  }
+</script>
+{% endblock %}

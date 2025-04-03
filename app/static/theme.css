@@ -207,6 +207,21 @@ footer a:hover {
 }
 
 
+
+/* -----------------------------------
+   Room results 
+----------------------------------- */
+#roomResult ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+#roomResult li::before {
+  margin-right: 0.5rem;
+}
+
+
 /* -----------------------------------
    🔧 Utility Classes
 ----------------------------------- */

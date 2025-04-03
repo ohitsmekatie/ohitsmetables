@@ -4,8 +4,15 @@ import subprocess
 from datetime import datetime
 import logging
 from functools import wraps
+import random
+from googleapiclient.discovery import build
+from google.oauth2.service_account import Credentials
+from .sheets import get_creds
+from zoneinfo import ZoneInfo 
+
 
 from .sheets import (
+    authorize_sheets,
     get_random_encounter,
     get_random_lore,
     get_flavor_text,
@@ -35,17 +42,38 @@ def safe_json(f):
             return jsonify({"error": str(e)}), 500
     return wrapper
 
-# === Util: Get Git last update date ===
+# === Util: Get Git last update date and google sheet last update ===
+
 def get_last_updated():
     try:
         result = subprocess.check_output(
             ["git", "log", "-1", "--format=%cd", "--date=iso"],
             stderr=subprocess.DEVNULL
         ).decode("utf-8").strip()
+        
         dt = datetime.fromisoformat(result)
         return dt.strftime("%B %d, %Y at %I:%M %p")
     except Exception as e:
         logger.warning("Failed to get last updated date: %s", e)
+        return "Unknown"
+
+
+def get_sheet_last_updated():
+    try:
+        creds = get_creds()
+        service = build("drive", "v3", credentials=creds)
+
+        file_id = "1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4"
+        file = service.files().get(fileId=file_id, fields="modifiedTime").execute()
+        updated = file["modifiedTime"]
+
+        # Convert UTC timestamp to local timezone
+        dt_utc = datetime.fromisoformat(updated.replace("Z", "+00:00"))
+        dt_local = dt_utc.astimezone(ZoneInfo("America/New_York"))  # ← your timezone here
+
+        return dt_local.strftime("%B %d, %Y at %I:%M %p")
+    except Exception as e:
+        logger.warning("Could not fetch sheet modified time: %s", e)
         return "Unknown"
 
 # === Routes ===
@@ -53,7 +81,8 @@ def get_last_updated():
 @main.route("/")
 def index():
     last_updated = get_last_updated()
-    return render_template("index.html", last_updated=last_updated)
+    content_updated = get_sheet_last_updated()
+    return render_template("index.html", last_updated=last_updated, content_updated=content_updated)
 
 @main.route("/about")
 def about():
@@ -114,3 +143,43 @@ def landmark():
         if rumor:
             response["rumor"] = rumor
     return jsonify(response)
+
+@main.route("/room-dressing")
+def room_dressing():
+    return render_template("room_dressing.html")
+
+@main.route("/room-dress")
+@safe_json
+def room_dress():
+
+    include_treasure = request.args.get("treasure") == "true"
+    include_trap = request.args.get("trap") == "true"
+    include_special = request.args.get("special") == "true"
+
+    sheet = authorize_sheets().worksheet("Room Dressing")
+    data = sheet.get_all_records()
+
+    if not data:
+        logger.warning("⚠️ No data found in Room Dressing sheet.")
+        return jsonify({"error": "No data in sheet"}), 500
+
+    room_items = [row.get("Room Item") for row in data if row.get("Room Item")]
+    room_vibes = [row.get("Room Vibe") for row in data if row.get("Room Vibe")]
+    treasures = [row.get("Treasure") for row in data if row.get("Treasure")]
+    traps = [row.get("Trap") for row in data if row.get("Trap")]
+    specials = [row.get("Special Element") for row in data if row.get("Special Element")]
+
+    result = {
+        "room_items": random.sample(room_items, min(3, len(room_items))) if room_items else [],
+        "room_vibe": random.choice(room_vibes) if room_vibes else None,
+    }
+
+    if include_treasure and treasures:
+        result["treasure"] = random.choice(treasures)
+    if include_trap and traps:
+        result["trap"] = random.choice(traps)
+    if include_special and specials:
+        result["special"] = random.choice(specials)
+
+    logger.info("Room dressing result: %s", result)
+    return jsonify(result)  # ✅ THIS is the key part!

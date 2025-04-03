@@ -12,7 +12,6 @@ SCOPES = [
 creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
 client = gspread.authorize(creds)
 
-
 def get_creds():
     return Credentials.from_service_account_file(
         "credentials.json",
@@ -22,17 +21,8 @@ def get_creds():
 def authorize_sheets():
     creds = get_creds()
     client = gspread.authorize(creds)
-    spreadsheet_id = "1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4"
-    return client.open_by_key(spreadsheet_id)
-
-
-# Setup Google Sheets access
-# def authorize_sheets():
-#     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-#     creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
-#     client = gspread.authorize(creds)
-#     spreadsheet_id = "1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4"
-#     return client.open_by_key(spreadsheet_id)
+    spreadsheet = client.open_by_key("1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4")
+    return spreadsheet
 
 # === Encounter Generator ===
 def get_random_encounter(biome=None, difficulty=None):
