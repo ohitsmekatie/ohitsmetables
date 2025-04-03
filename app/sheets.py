@@ -5,6 +5,8 @@ import gspread
 import random
 import logging
 from flask import jsonify, request 
+import os
+import json
 
 import os
 
@@ -18,14 +20,12 @@ SCOPES = [
 SHOP_SHEET_ID = "1R4chFy9edh8Ao6zs9WX5o03nDmwYN9xJWl0ONVOfqH8"
 
 # scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH, scopes=SCOPES)
-client = gspread.authorize(creds)
+# creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH, scopes=SCOPES)
 
 def get_creds():
-    return Credentials.from_service_account_file(
-        "credentials.json",
-        scopes=SCOPES
-    )
+    raw = os.getenv("GOOGLE_CREDENTIALS_JSON")
+    info = json.loads(raw)
+    return Credentials.from_service_account_info(info, scopes=SCOPES)
 
 def authorize_sheets(spreadsheet_id=None):
     scope =  ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]

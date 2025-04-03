@@ -180,3 +180,11 @@ def generate_shop():
         print("🔥 Error in generate_shop:", e)
         return jsonify({"error": str(e)}), 500
 
+@main.route("/test-auth")
+def test_auth():
+    try:
+        sheet = authorize_sheets().sheet1
+        title = sheet.title
+        return jsonify({"status": "✅ Success", "sheet_title": title})
+    except Exception as e:
+        return jsonify({"status": "❌ Failed", "error": str(e)}), 500
