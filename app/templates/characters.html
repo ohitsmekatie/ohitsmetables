@@ -23,6 +23,15 @@
       if (display) {
         const output = [];
 
+        const seed = `${data["First Name"]} ${data["Last Name"]} ${data["Race"]}`;
+        const avatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${encodeURIComponent(seed)}`;
+
+        output.push(`
+          <div class="text-center mb-3">
+            <img src="${avatarUrl}" alt="Portrait of ${seed}" width="100" height="100" class="mb-3 rounded" />
+          </div>
+        `);
+
         output.push(`<h4 class="fw-bold mb-3"> ${data["First Name"]} ${data["Last Name"]} — <em>${data["Race"]}</em></h4>`);
         output.push(`<p><strong>🧍 Appearance:</strong> ${data["Physical Description"]}</p>`);
         output.push(`<hr><p><strong>🎭 Personality:</strong> ${data["Personality"]}</p>`);
@@ -43,5 +52,5 @@
     }
   });
 </script>
-
 {% endblock %}
+
