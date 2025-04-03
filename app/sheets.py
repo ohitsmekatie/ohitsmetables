@@ -136,22 +136,34 @@ def get_random_landmark(biome=None):
     sheet = authorize_sheets().worksheet("Landmarks")
     raw_data = sheet.get_all_values()
 
-    if not raw_data or not biome:
-        return "Please select a biome to generate a landmark."
+    if not raw_data:
+        return {"landmark": "No landmark data found.", "biome": None}
 
     headers = [h.strip() for h in raw_data[0]]
     rows = raw_data[1:]
 
-    if biome not in headers:
-        return f"No landmarks found for biome: {biome}"
+    biome = biome.strip() if biome else None
 
-    col_index = headers.index(biome)
-    landmarks = [row[col_index].strip() for row in rows if len(row) > col_index and row[col_index].strip()]
+    if biome and biome not in headers:
+        return {"landmark": f"No landmarks found for biome: {biome}", "biome": None}
+
+    if not biome:
+        # Random from all columns
+        biome_index = random.randint(0, len(headers) - 1)
+        biome = headers[biome_index]
+        landmarks = [row[biome_index].strip() for row in rows if len(row) > biome_index and row[biome_index].strip()]
+    else:
+        col_index = headers.index(biome)
+        landmarks = [row[col_index].strip() for row in rows if len(row) > col_index and row[col_index].strip()]
 
     if not landmarks:
-        return f"No landmarks found for {biome}."
+        return {"landmark": f"No landmarks found for {biome}.", "biome": biome}
 
-    return random.choice(landmarks)
+    return {
+        "landmark": random.choice(landmarks),
+        "biome": biome
+    }
+
 
 # === Rumors ===
 def get_random_rumor():

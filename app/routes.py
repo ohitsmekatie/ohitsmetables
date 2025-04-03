@@ -140,12 +140,19 @@ def landmark():
     biome = request.args.get("biome")
     include_rumor = request.args.get("rumor") == "true"
 
-    response = {"landmark": get_random_landmark(biome)}
+    result = get_random_landmark(biome)
+    response = {
+        "landmark": result["landmark"],
+        "biome": result["biome"]
+    }
+
     if include_rumor:
         rumor = get_random_rumor()
         if rumor:
             response["rumor"] = rumor
-    return jsonify(response)
+
+    return response
+
 
 @main.route("/room-dressing")
 def room_dressing():
