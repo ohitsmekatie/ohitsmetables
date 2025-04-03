@@ -16,6 +16,16 @@ body {
   color: #d3d3d3 !important;
 }
 
+a {
+  color: #0DCAF0; 
+  text-decoration: none;
+}
+
+a:hover {
+  color: #eab308;
+  text-decoration: none;
+}
+
 
 /* -----------------------------------
    🔮 Mystic Button Style (Shared)
@@ -113,6 +123,10 @@ body {
   box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
   font-family: 'Crimson Pro', serif;
   color: #f4f4f4;
+
+  max-width: 720px;        
+  margin-left: auto;       
+  margin-right: auto;
 }
 
 
