@@ -1,3 +1,4 @@
+# all the functions to get data from the google sheets 
 
 from google.oauth2.service_account import Credentials
 import gspread
@@ -66,7 +67,7 @@ def get_random_encounter(biome=None, difficulty=None):
 
 
 # === Lore Fetcher ===
-def get_random_lore(num_items=4):
+def get_random_lore(num_items=5):
     lore_sheet = authorize_sheets().worksheet("Lore")
     entries = lore_sheet.col_values(1)  # Assumes single-column
     entries = [entry.strip() for entry in entries if entry.strip()]
@@ -101,7 +102,7 @@ def get_random_food(include_weird=False, include_magical=False):
         return None
 
     food = random.choice(data)
-    print("Random food row:", food)  # ✅ Add this
+    print("Random food row:", food)  
 
     result = {
         "Food Item": food.get("Food Item", ""),

@@ -10,7 +10,6 @@ from google.oauth2.service_account import Credentials
 from .sheets import get_creds
 from zoneinfo import ZoneInfo 
 
-
 from .sheets import (
     authorize_sheets,
     get_random_encounter,
@@ -23,7 +22,7 @@ from .sheets import (
     get_room_dress
 )
 
-# Set up logging
+# === logging to help me debug ===
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
@@ -43,7 +42,7 @@ def safe_json(f):
             return jsonify({"error": str(e)}), 500
     return wrapper
 
-# === Util: Get Git last update date and google sheet last update ===
+# === Get Git last update date and google sheet last update ===
 
 def get_last_updated():
     try:
@@ -153,5 +152,3 @@ def room_dressing():
 @safe_json
 def room_dress():
     return jsonify(get_room_dress())
-
-
