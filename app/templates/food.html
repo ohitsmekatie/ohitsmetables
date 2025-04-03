@@ -37,18 +37,30 @@
 
       const display = document.getElementById("foodDisplay");
       if (display) {
-        display.innerHTML = `
-          <h4 class="fw-bold mb-3">${data["Food Item"]}</h4>
-          <p>${data["Description"]}</p>
-          ${data["Weird Side Effect"] ? `<p><strong>Weird Side Effect:</strong> ${data["Weird Side Effect"]}</p>` : ""}
-          ${data["Magical Side Effect"] ? `<p><strong>Magical Side Effect:</strong> ${data["Magical Side Effect"]}</p>` : ""}
-        `;
+        const output = [];
+
+        output.push(`<h4 class="fw-bold mb-3"> ${data["Food Item"]}</h4>`);
+        output.push(`<p>${data["Description"]}</p>`);
+
+        if (data["Weird Side Effect"]) {
+          output.push(`<hr><p><strong>🌀 Weird Side Effect:</strong> ${data["Weird Side Effect"]}</p>`);
+        }
+
+        if (data["Magical Side Effect"]) {
+          output.push(`<hr><p><strong>✨ Magical Side Effect:</strong> ${data["Magical Side Effect"]}</p>`);
+        }
+
+        display.innerHTML = output.join("");
         display.classList.remove("d-none");
         display.classList.add("show");
       }
     } catch (err) {
       console.error("Error fetching food:", err);
+      const display = document.getElementById("foodDisplay");
+      display.innerHTML = `<p class="text-danger">⚠️ Something went wrong loading your magical meal.</p>`;
+      display.classList.remove("d-none");
     }
   });
 </script>
+
 {% endblock %}

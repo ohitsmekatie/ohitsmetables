@@ -19,7 +19,10 @@ from .sheets import (
     get_random_food,
     get_random_landmark,
     get_random_rumor,
-    get_room_dress
+    get_room_dress,
+    get_random_shop_items,
+    get_random_shopkeeper,
+    get_random_rumors
 )
 
 # === logging to help me debug ===
@@ -152,3 +155,28 @@ def room_dressing():
 @safe_json
 def room_dress():
     return jsonify(get_room_dress())
+
+@main.route("/shops")
+def shops():
+    return render_template("shops.html")
+
+@main.route("/generate-shop")
+def generate_shop():
+    store_type = request.args.get("type")
+    count = int(request.args.get("count", 5))
+    include_keeper = request.args.get("keeper") == "true"
+
+    try:
+        items = get_random_shop_items(store_type, count)
+        keeper = get_random_shopkeeper() if include_keeper else None
+        rumors = get_random_rumors()
+
+        return jsonify({
+            "items": items,
+            "shopkeeper": keeper,
+            "rumors": rumors
+        })
+    except Exception as e:
+        print("🔥 Error in generate_shop:", e)
+        return jsonify({"error": str(e)}), 500
+
