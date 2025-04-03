@@ -19,7 +19,8 @@ from .sheets import (
     get_random_character,
     get_random_food,
     get_random_landmark,
-    get_random_rumor
+    get_random_rumor,
+    get_room_dress
 )
 
 # Set up logging
@@ -151,35 +152,6 @@ def room_dressing():
 @main.route("/room-dress")
 @safe_json
 def room_dress():
+    return jsonify(get_room_dress())
 
-    include_treasure = request.args.get("treasure") == "true"
-    include_trap = request.args.get("trap") == "true"
-    include_special = request.args.get("special") == "true"
 
-    sheet = authorize_sheets().worksheet("Room Dressing")
-    data = sheet.get_all_records()
-
-    if not data:
-        logger.warning("⚠️ No data found in Room Dressing sheet.")
-        return jsonify({"error": "No data in sheet"}), 500
-
-    room_items = [row.get("Room Item") for row in data if row.get("Room Item")]
-    room_vibes = [row.get("Room Vibe") for row in data if row.get("Room Vibe")]
-    treasures = [row.get("Treasure") for row in data if row.get("Treasure")]
-    traps = [row.get("Trap") for row in data if row.get("Trap")]
-    specials = [row.get("Special Element") for row in data if row.get("Special Element")]
-
-    result = {
-        "room_items": random.sample(room_items, min(3, len(room_items))) if room_items else [],
-        "room_vibe": random.choice(room_vibes) if room_vibes else None,
-    }
-
-    if include_treasure and treasures:
-        result["treasure"] = random.choice(treasures)
-    if include_trap and traps:
-        result["trap"] = random.choice(traps)
-    if include_special and specials:
-        result["special"] = random.choice(specials)
-
-    logger.info("Room dressing result: %s", result)
-    return jsonify(result)  # ✅ THIS is the key part!
