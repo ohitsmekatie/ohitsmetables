@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="text-center">
+    <h1 class="mb-4 display-5">
+      <i class="fas fa-map-marked-alt me-2"></i> Landmark Generator
+    </h1>
+
+    <!-- Biome dropdown -->
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-4">
+        <select id="biome" class="form-select">
+          <option value="">Choose a Biome</option>
+          <option value="Forest">Forest</option>
+          <option value="Swamp">Swamp</option>
+          <option value="Mountain">Mountain</option>
+          <option value="Desert">Desert</option>
+          <option value="Underwater">Underwater</option>
+          <option value="Grassland">Grassland</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Rumor checkbox -->
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-4 text-start">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="includeRumor">
+          <label class="form-check-label" for="includeRumor">
+            Include Rumor
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generate button -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-4 text-center">
+        <button id="generateEncounterBtn">
+          <i class="fas fa-wand-sparkles me-2"></i> Generate Landmark
+        </button>
+      </div>
+    </div>
+
+    <!-- Result display -->
+    <div id="landmarkDisplay" class="encounter-card d-none mt-4"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
+    const biome = document.getElementById("biome").value;
+    const rumor = document.getElementById("includeRumor").checked;
+
+    if (!biome) {
+      alert("Please choose a biome.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/landmark?biome=${biome}&rumor=${rumor}`);
+      const data = await res.json();
+
+      const display = document.getElementById("landmarkDisplay");
+      if (display) {
+        display.innerHTML = `
+          <h5 class="fw-bold mb-3">${data.landmark}</h5>
+          ${data.rumor ? `<p class="fst-italic text-muted">🗣️ Rumor: ${data.rumor}</p>` : ""}
+        `;
+        display.classList.remove("d-none");
+        display.classList.add("show");
+      }
+    } catch (err) {
+      console.error("Error fetching landmark:", err);
+    }
+  });
+</script>
+{% endblock %}

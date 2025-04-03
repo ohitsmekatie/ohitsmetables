@@ -45,11 +45,12 @@
 
       const display = document.getElementById("encounterDisplay");
       if (display) {
-        display.textContent = data.encounter || data.error;
+        display.innerHTML = `
+          <div class="mb-2"><strong>${data.encounter}</strong></div>
+          <div class="text-muted small fst-italic">${data.flavor}</div>
+        `;
         display.classList.remove("d-none");
         display.classList.add("show");
-      } else {
-        console.error("Encounter display element not found.");
       }
     } catch (err) {
       console.error("Error fetching encounter:", err);
@@ -57,4 +58,3 @@
   });
 </script>
 {% endblock %}
-

@@ -1,8 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="text-center">
-    <h1>About This Project</h1>
-    <p class="lead">This is a random encounter generator built with Flask, Google Sheets, and a little magic.</p>
+<div class="text-center">
+  <h1 class="display-5 mb-4 animate-fade-in text-shadow-light">
+    <i class="fas fa-scroll me-2"></i> About This Project
+  </h1>
+</div>
+
+<div class="mx-auto" style="max-width: 720px;">
+  <div class="p-4 encounter-card animate-fade-in-delay">
+
+    <h5 class="mb-3 text-info">🛠️ The Technology</h5>
+    <p>
+      <strong>Game Prep Galore</strong> is a game prep resourse built with:
+    </p>
+    <ul>
+      <li>🐍 <strong>Flask (Python)</strong> for the backend</li>
+      <li>📄 <strong>Google Sheets</strong> as a dynamic content engine</li>
+      <li>🎨 <strong>Bootstrap + custom CSS</strong> for the layout</li>
+      <li>✨ <strong>Font Awesome</strong> icons to make things sparkle</li>
+    </ul>
+
+    <hr class="my-4 border-light">
+
+    <h5 class="mb-3 text-info">🎲 About Katie</h5>
+    <p>
+      Hi! I’m <strong>Katie</strong> — a GM  based in <strong>Pittsburgh</strong>, where I live with my <strong>husband</strong> and our many many animals.
+    </p>
+    <p>
+      I’ve been playing and running RPGs for years, but recently have been getting more into content creation. I love making maps and RPG related doodles and someday i'll upload those here as well.
+    </p>
+    <p>
+      This site is my way of blending that love of tabletop games with a little bit of web whimsy. I hope it inspires your prep, your play, and your stories!
+    </p>
   </div>
+</div>
 {% endblock %}

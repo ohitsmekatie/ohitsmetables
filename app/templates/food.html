@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="text-center">
+    <h1 class="mb-4 display-5">
+      <i class="fas fa-drumstick-bite me-2"></i> Magical Food Generator
+    </h1>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="includeWeird">
+      <label class="form-check-label" for="includeWeird">Weird Side Effect</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="includeMagical">
+      <label class="form-check-label" for="includeMagical">Magical Side Effect</label>
+    </div>
+
+    <div class="mt-4">
+      <button id="generateEncounterBtn" class="mb-4">
+        <i class="fas fa-wand-sparkles me-2"></i> Generate Food
+      </button>
+    </div>
+
+    <div id="foodDisplay" class="encounter-card d-none mt-4"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
+    const weird = document.getElementById("includeWeird").checked;
+    const magical = document.getElementById("includeMagical").checked;
+
+    try {
+      const res = await fetch(`/food-item?weird=${weird}&magical=${magical}`);
+      const data = await res.json();
+
+      const display = document.getElementById("foodDisplay");
+      if (display) {
+        display.innerHTML = `
+          <h4 class="fw-bold mb-3">${data["Food Item"]}</h4>
+          <p>${data["Description"]}</p>
+          ${data["Weird Side Effect"] ? `<p><strong>Weird Side Effect:</strong> ${data["Weird Side Effect"]}</p>` : ""}
+          ${data["Magical Side Effect"] ? `<p><strong>Magical Side Effect:</strong> ${data["Magical Side Effect"]}</p>` : ""}
+        `;
+        display.classList.remove("d-none");
+        display.classList.add("show");
+      }
+    } catch (err) {
+      console.error("Error fetching food:", err);
+    }
+  });
+</script>
+{% endblock %}

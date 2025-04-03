@@ -41,3 +41,74 @@ def get_random_lore(num_items=4):
     entries = lore_sheet.col_values(1)  # Assumes single-column
     entries = [entry.strip() for entry in entries if entry.strip()]
     return random.sample(entries, min(num_items, len(entries)))
+    
+def get_flavor_text():
+    sheet = authorize_sheets().worksheet("Flavor")
+    lines = sheet.col_values(1)  # Read column A
+    lines = [line.strip() for line in lines if line.strip()]
+    return random.choice(lines) if lines else ""
+
+def get_random_character():
+    sheet = authorize_sheets().worksheet("Characters")
+    raw_data = sheet.get_all_values()
+
+    headers = [h.strip() for h in raw_data[0]]  # 👈 Strip column names
+    rows = raw_data[1:]
+
+    # strips white lines or spaces
+    records = [dict(zip(headers, [cell.strip() for cell in row])) for row in rows if any(cell.strip() for cell in row)]
+
+    if not records:
+        return None
+
+    return random.choice(records)
+
+def get_random_food(include_weird=False, include_magical=False):
+    sheet = authorize_sheets().worksheet("Food")
+    data = sheet.get_all_records()
+
+    if not data:
+        return None
+
+    food = random.choice(data)
+    print("Random food row:", food)  # ✅ Add this
+
+    result = {
+        "Food Item": food.get("Food Item", ""),
+        "Description": food.get("Description", "")
+    }
+
+    if include_weird:
+        result["Weird Side Effect"] = food.get("Weird Side Effect", "")
+
+    if include_magical:
+        result["Magical Side Effect"] = food.get("Magical Side Effect", "")
+
+    return result
+
+def get_random_landmark(biome=None):
+    sheet = authorize_sheets().worksheet("Landmarks")
+    raw_data = sheet.get_all_values()
+
+    if not raw_data or not biome:
+        return "Please select a biome to generate a landmark."
+
+    headers = [h.strip() for h in raw_data[0]]
+    rows = raw_data[1:]
+
+    if biome not in headers:
+        return f"No landmarks found for biome: {biome}"
+
+    col_index = headers.index(biome)
+    landmarks = [row[col_index].strip() for row in rows if len(row) > col_index and row[col_index].strip()]
+
+    if not landmarks:
+        return f"No landmarks found for {biome}."
+
+    return random.choice(landmarks)
+
+def get_random_rumor():
+    sheet = authorize_sheets().worksheet("Rumors")
+    lines = sheet.col_values(1)
+    lines = [line.strip() for line in lines if line.strip()]
+    return random.choice(lines) if lines else None

@@ -2,7 +2,39 @@
 
 {% block content %}
   <div class="text-center">
-    <h1>Characters</h1>
-    <p class="lead">A list of recurring NPCs or player characters. (Coming soon!)</p>
+    <h1 class="mb-4 display-5"><i class="fas fa-users me-2"></i>Summon a Random NPC</h1>
+
+    <button id="generateEncounterBtn" class="mb-4">
+      <i class="fas fa-wand-sparkles me-2"></i> Generate Character
+    </button>
+    
+    <div id="characterDisplay" class="encounter-card d-none mt-4"></div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
+    try {
+      const res = await fetch("/character");
+      const data = await res.json();
+
+      const display = document.getElementById("characterDisplay");
+      if (display) {
+        display.innerHTML = `
+          <h5 class="mb-3">${data["First Name"]} ${data["Last Name"]} — <em>${data["Race"]}</em></h5>
+          <p><strong>Physical:</strong> ${data["Physical Description"]}</p>
+          <p><strong>Personality:</strong> ${data["Personality"]}</p>
+          <p><strong>Quirk:</strong> ${data["Quirk"]}</p>
+          <p><strong>Motivation:</strong> ${data["Motivation"]}</p>
+          <p><strong>Job or Purpose:</strong> ${data["Job"]}</p>
+        `;
+        display.classList.remove("d-none");
+        display.classList.add("show");
+      }
+    } catch (err) {
+      console.error("Error fetching character:", err);
+    }
+  });
+</script>
 {% endblock %}

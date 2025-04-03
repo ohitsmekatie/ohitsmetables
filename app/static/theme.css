@@ -1,71 +1,167 @@
-/* === FANTASY THEME === */
+/* -----------------------------------
+   🧙 Typography & Base Layout
+----------------------------------- */
 body {
-  background-color: #1e1e2f;
-  color: #f4f4f4;
+  background-color: #1e1b2e;
+  color: #f3f3f3;
   font-family: 'Crimson Pro', serif;
 }
 
-.navbar {
-  background-color: #2a2139 !important;
+.text-shadow-light {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.nav-link, .navbar-brand {
-  color: #f4f4f4 !important;
+/* Override Bootstrap text-muted for dark backgrounds */
+.text-muted {
+  color: #d3d3d3 !important;
 }
 
-.nav-link.active {
-  color: #eab308 !important;
-  font-weight: bold;
-  border-bottom: 2px solid #eab308;
-}
 
-.btn-primary {
-  background-color: #8b5cf6;
-  border-color: #8b5cf6;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #a78bfa;
-  box-shadow: 0 0 12px #8b5cf6;
-}
-
-.alert-info {
-  background-color: #2a2139;
-  border-color: #8b5cf6;
-  color: #f4f4f4;
-}
-
-.card {
-  background-color: #2a2139;
-  border: 1px solid #8b5cf6;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-}
-
-select.form-select {
-  background-color: #2a2139;
-  color: #f4f4f4;
-  border: 1px solid #8b5cf6;
-}
-
-.encounter-card {
-  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-  background-color: #f9f3e9;
-  color: #2a2139;
-  padding: 1.5rem;
-  border: 3px double #8b5cf6;
-  border-radius: 12px;
-  font-family: 'Crimson Pro', serif;
+/* -----------------------------------
+   🔮 Mystic Button Style (Shared)
+----------------------------------- */
+.mystic-btn {
+  background: linear-gradient(145deg, #6d28d9, #9333ea);
+  color: #fff;
   font-size: 1.2rem;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-  max-width: 600px;
-  margin: 0 auto;
-  transition: all 0.4s ease;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #8b5cf6;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-decoration: none;
 }
 
-/* === Mystic Button Style === */
+.mystic-btn:hover {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  box-shadow: 0 0 20px #eab308, 0 0 30px #8b5cf6;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+/* -----------------------------------
+   🔮 Mystic Button Style (Not Shared)
+----------------------------------- */
+
+.mystic-button {
+  background: linear-gradient(145deg, #6d28d9, #9333ea);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #8b5cf6;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.mystic-button:hover {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  box-shadow: 0 0 20px #eab308, 0 0 30px #8b5cf6;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+/* -----------------------------------
+   🌀 Animations for Landing Page
+----------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 1s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 1s ease-out 1s forwards;
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.2); opacity: 1; }
+}
+
+.animate-sparkles i {
+  animation: pulse 2.5s infinite alternate;
+}
+
+
+/* -----------------------------------
+   🗺️ Encounter / Card Style
+----------------------------------- */
+.encounter-card {
+  background-color: #2a2139;
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  font-family: 'Crimson Pro', serif;
+  color: #f4f4f4;
+}
+
+
+/* -----------------------------------
+   📜 Lore Sidebar
+----------------------------------- */
+.lore-sidebar {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  width: 240px;
+  padding: 1.5rem;
+  background-color: #2a2139;
+  color: #f4f4f4;
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  z-index: 1000;
+  font-family: 'Crimson Pro', serif;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.lore-sidebar ul li {
+  margin-bottom: 0.5rem;
+}
+
+
+/* -----------------------------------
+   🧭 Footer
+----------------------------------- */
+footer a:hover {
+  color: #a78bfa;
+  text-decoration: none;
+}
+
+.border-purple {
+  border-color: #8b5cf6 !important;
+}
+
+.bg-purple {
+  background-color: #2a2139; !important;
+}
+
+
+/* -----------------------------------
+   Button
+----------------------------------- */
+
 #generateEncounterBtn {
   background: linear-gradient(145deg, #6d28d9, #9333ea);
   color: #fff;
@@ -86,31 +182,33 @@ select.form-select {
   cursor: pointer;
 }
 
-.lore-sidebar {
-  position: fixed;
-  top: 100px;
-  right: 30px;
-  width: 240px;
-  padding: 1.5rem;
-  background-color: #2a2139;
-  color: #f4f4f4;
-  border: 2px solid #8b5cf6;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-  z-index: 1000;
-  font-family: 'Crimson Pro', serif;
-  line-height: 1.6;
-  text-align: center; /* ✅ Center the text */
+
+/* -----------------------------------
+   Custom nav bar
+----------------------------------- */
+
+.navbar-purple {
+  background-color: #2a2139; !important; 
+  border-bottom: 2px solid #8b5cf6;
+}
+
+.navbar-purple .nav-link {
+  color: #f3f3f3 !important;
+}
+
+.navbar-purple .nav-link.active {
+  font-weight: bold;
+  color: #e0b3ff !important;
+}
+
+.navbar-purple .navbar-brand {
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 
-.lore-sidebar h5 {
-  font-size: 1.1rem;
-  margin-bottom: 0.75rem;
-  border-bottom: 1px solid #8b5cf6;
-  padding-bottom: 0.5rem;
-}
 
-.lore-sidebar ul li {
-  margin-bottom: 0.5rem; /* ✅ space between lines */
-}
+/* -----------------------------------
+   🔧 Utility Classes
+----------------------------------- */
+/* Add any helpers or page-specific tweaks here */
