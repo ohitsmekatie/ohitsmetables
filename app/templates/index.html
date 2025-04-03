@@ -1,49 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
   <div class="text-center">
-    <h1 class="mb-4">Random Encounter Generator</h1>
+    <!-- Title -->
+    <h1 class="display-3 fw-bold mb-3 animate-fade-in text-shadow-light">
+      🧙 Lore & More 
+    </h1>
 
-    <div class="row justify-content-center mb-3">
-      <div class="col-md-3">
-        <select id="biome" class="form-select">
-          <option value="">Any Biome</option>
-          <option value="Forest">Forest</option>
-          <option value="Cave">Cave</option>
-          <option value="Misc">Misc</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <select id="difficulty" class="form-select">
-          <option value="">Any Difficulty</option>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-        </select>
-      </div>
+    <!-- Tagline -->
+    <p class="lead text-muted animate-fade-in-delay">
+      Random content generators for DMs and worldbuilders alike. To the right of each page you'll see a "Random Inspiration" card. This will update with 5 
+      new pieces of random inspiration every time you load the page. In the navigation you'll find a number of random generators I've put together using 
+      my own content — not written by AI. If you have any suggestions, feel free to reach out through the form on the <strong>about</strong> section. 
+      Enjoy and happy worldbuilding!
+    </p>
+
+    <!-- Buttons -->
+    <div class="mt-5 animate-fade-in-delay-2">
+      <a href="/random-encounters" class="mystic-button me-3">
+        <i class="fas fa-hat-wizard me-2"></i> Start Generating
+      </a>
+      <a href="/about" class="mystic-button">
+        <i class="fas fa-scroll me-2"></i> Learn More
+      </a>
     </div>
 
-    <button id="generateEncounterBtn" class="mb-4">
-      <i class="fas fa-wand-sparkles me-2"></i> Summon Encounter
-    </button>
-    
-    <div id="encounterDisplay" class="alert alert-info d-none"></div>
+    <p class="mt-5 text-muted small fst-italic">
+      ✨ Last updated: {{ last_updated }}
+    </p>
+
+    <!-- Sparkles / Icons -->
+    <div class="mt-5 animate-sparkles">
+      <i class="fas fa-star fa-2x me-3 text-warning"></i>
+      <i class="fas fa-ghost fa-2x me-3 text-info"></i>
+      <i class="fas fa-moon fa-2x text-light"></i>
+    </div>
   </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-  document.getElementById("getEncounter").addEventListener("click", async () => {
-    const biome = document.getElementById("biome").value;
-    const difficulty = document.getElementById("difficulty").value;
-
-    const res = await fetch(`/random-encounter?biome=${biome}&difficulty=${difficulty}`);
-    const data = await res.json();
-
-    const display = document.getElementById("encounterDisplay");
-    display.textContent = data.encounter || data.error;
-    display.classList.remove("d-none");
-  });
-</script>
+</div>
 {% endblock %}
 

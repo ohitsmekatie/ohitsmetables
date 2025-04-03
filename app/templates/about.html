@@ -16,6 +16,7 @@
     </p>
     <ul>
       <li>🐍 <strong>Flask (Python)</strong> for the backend</li>
+      <li>✍️ <strong> Poetry </strong> for managing dependencies </li>
       <li>📄 <strong>Google Sheets</strong> as a dynamic content engine</li>
       <li>🎨 <strong>Bootstrap + custom CSS</strong> for the layout</li>
       <li>✨ <strong>Font Awesome</strong> icons to make things sparkle</li>
@@ -25,14 +26,38 @@
 
     <h5 class="mb-3 text-info">🎲 About Katie</h5>
     <p>
-      Hi! I’m <strong>Katie</strong> — a GM  based in <strong>Pittsburgh</strong>, where I live with my <strong>husband</strong> and our many many animals.
+      Hello! I’m <strong>Katie</strong> — a GM  based in <strong>Pittsburgh</strong>, where I live with my husband and our many many animals.
     </p>
     <p>
-      I’ve been playing and running RPGs for years, but recently have been getting more into content creation. I love making maps and RPG related doodles and someday i'll upload those here as well.
+      I’ve been playing and running RPGs for years, but recently have been getting more into content creation. I love making isometric maps and RPG related doodles and someday i'll upload those here as well.
     </p>
     <p>
-      This site is my way of blending that love of tabletop games with a little bit of web whimsy. I hope it inspires your prep, your play, and your stories!
+      I know a lot of these sites already exist, but this was a way for me to explore Flask for something I love (world building!) I hope it inspires your prep, your play, and your stories!
     </p>
   </div>
+
+  <hr class="my-4 border-light">
+
+  <h5 class="mb-3 text-info">📬 Feedback?</h5>
+  <p>If you’ve got an idea, request, or just want to say hi, I’d love to hear it!</p>
+
+  <form action="https://formspree.io/f/xoveklll" method="POST" class="mt-3">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email (optional)</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
+      <div class="form-text">If you want a response, include your email.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="message" class="form-label">Suggestion or Feedback</label>
+      <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-outline-light shadow-sm rounded-pill px-4">
+      <i class="fas fa-heart me-1"></i> Scream (with love!) into the void (my email!)
+    </button>
+    
+  </form>
+
 </div>
 {% endblock %}

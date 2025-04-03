@@ -76,7 +76,7 @@ def get_random_character():
     sheet = authorize_sheets().worksheet("Characters")
     raw_data = sheet.get_all_values()
 
-    headers = [h.strip() for h in raw_data[0]]  # 👈 Strip column names
+    headers = [h.strip() for h in raw_data[0]]  # Strip column names
     rows = raw_data[1:]
 
     # strips white lines or spaces
