@@ -98,7 +98,7 @@ def get_random_character():
     sheet = authorize_sheets().worksheet("Characters")
     raw_data = sheet.get_all_values()
 
-    headers = [h.strip() for h in raw_data[0]]  # Make sure column names are clean
+    headers = [h.strip() for h in raw_data[0]]
     rows = raw_data[1:]
 
     records = [
@@ -109,7 +109,9 @@ def get_random_character():
     if not records:
         return None
 
-    return random.choice(records)
+    chosen = random.choice(records)
+    return chosen
+
 
    
 # === Food ===
