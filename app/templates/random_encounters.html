@@ -32,6 +32,7 @@
 {% endblock %}
 
 {% block scripts %}
+{{ super() }}
 <script>
   document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
     const biome = document.getElementById("biome").value;

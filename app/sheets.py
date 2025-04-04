@@ -98,16 +98,20 @@ def get_random_character():
     sheet = authorize_sheets().worksheet("Characters")
     raw_data = sheet.get_all_values()
 
-    headers = [h.strip() for h in raw_data[0]]
+    headers = [h.strip() for h in raw_data[0]]  # Make sure column names are clean
     rows = raw_data[1:]
 
-    records = [dict(zip(headers, [cell.strip() for cell in row])) for row in rows if any(cell.strip() for cell in row)]
+    records = [
+        dict(zip(headers, [cell.strip() for cell in row]))
+        for row in rows if any(cell.strip() for cell in row)
+    ]
 
     if not records:
         return None
 
     return random.choice(records)
 
+   
 # === Food ===
 def get_random_food(include_weird=False, include_magical=False):
     sheet = authorize_sheets().worksheet("Food")

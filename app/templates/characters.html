@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block scripts %}
+{{ super() }}
 <script>
   document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
     try {

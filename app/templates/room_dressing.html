@@ -28,6 +28,10 @@
   <div id="roomResult" class="encounter-card mt-5 p-4" style="display: none;"></div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
 <script>
   async function getRoomDressing() {
     const treasure = document.getElementById("includeTreasure").checked;
@@ -66,4 +70,5 @@
     resultDiv.style.display = "block";
   }
 </script>
+
 {% endblock %}
