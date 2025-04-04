@@ -201,17 +201,14 @@ def get_room_dress():
 
     result = {
         "room_items": random.sample(room_items, min(3, len(room_items))) if room_items else [],
-        "room_vibe": random.choice(room_vibes) if room_vibes else None,
+        "room_vibe": random.sample(room_vibes, min(2, len(room_vibes))) if room_vibes else [],
+        "treasure": random.sample(treasures, min(3, len(treasures))) if include_treasure and treasures else [],
+        "trap": [random.choice(traps)] if include_trap and traps else [],
+        "special": [random.choice(specials)] if include_special and specials else []
     }
 
-    if include_treasure and treasures:
-        result["treasure"] = random.choice(treasures)
-    if include_trap and traps:
-        result["trap"] = random.choice(traps)
-    if include_special and specials:
-        result["special"] = random.choice(specials)
-
     return result
+
 
 # === Shop System ===
 def get_random_shop_items(store_type, count):
