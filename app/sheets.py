@@ -110,6 +110,7 @@ def get_random_character():
         return None
 
     chosen = random.choice(records)
+    chosen["Picture File Name"] = chosen.get("Picture File Name", "").strip()
     return chosen
 
 

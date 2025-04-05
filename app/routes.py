@@ -91,10 +91,6 @@ def index():
 def about():
     return render_template("about.html")
 
-@main.route("/characters")
-def characters():
-    return render_template("characters.html")
-
 @main.route("/random-encounters")
 def random_encounters():
     return render_template("random_encounters.html")
@@ -113,6 +109,10 @@ def random_encounter():
 @safe_json
 def lore():
     return jsonify(get_random_lore())
+
+@main.route("/characters")
+def characters():
+    return render_template("characters.html")
 
 @main.route("/character")
 @safe_json
