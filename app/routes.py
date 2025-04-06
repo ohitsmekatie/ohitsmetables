@@ -70,7 +70,7 @@ def get_sheet_last_updated():
         file = service.files().get(fileId=file_id, fields="modifiedTime").execute()
         updated = file["modifiedTime"]
 
-        # Convert UTC timestamp to local timezone
+        # Convert UTC timestamp to local timezone bc the API returns UTC
         dt_utc = datetime.fromisoformat(updated.replace("Z", "+00:00"))
         dt_local = dt_utc.astimezone(ZoneInfo("America/New_York"))  # ← your timezone here
 
@@ -138,7 +138,6 @@ def landmarks():
 @safe_json
 def landmark():
     biome = request.args.get("biome")
-    include_rumor = request.args.get("rumor") == "true"
 
     result = get_random_landmark(biome)
     response = {
@@ -146,13 +145,7 @@ def landmark():
         "biome": result["biome"]
     }
 
-    if include_rumor:
-        rumor = get_random_rumor()
-        if rumor:
-            response["rumor"] = rumor
-
     return response
-
 
 @main.route("/room-dressing")
 def room_dressing():

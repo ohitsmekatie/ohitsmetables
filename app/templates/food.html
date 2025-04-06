@@ -27,41 +27,52 @@
 
 {% block scripts %}
 {{ super() }}
+
 <script>
   document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
-    const weird = document.getElementById("includeWeird").checked;
-    const magical = document.getElementById("includeMagical").checked;
+    const includeWeird = document.getElementById("includeWeird").checked;
+    const includeMagical = document.getElementById("includeMagical").checked;
 
     try {
-      const res = await fetch(`/food-item?weird=${weird}&magical=${magical}`);
-      const data = await res.json();
+      const response = await fetch(`/food-item?weird=${includeWeird}&magical=${includeMagical}`);
+      if (!response.ok) {
+        const errText = await response.text();
+        console.error("Server error:", errText);
+        throw new Error(`Server responded with ${response.status}`);
+      }
 
+      const data = await response.json();
       const display = document.getElementById("foodDisplay");
+
       if (display) {
-        const output = [];
+        const imagePath = data.picture_file_name
+          ? `/static/images/food/${data.picture_file_name}`
+          : null;
 
-        output.push(`<h5 class="fw-bold mb-3"> ${data["Food Item"]}</h5>`);
-        output.push(`<p>${data["Description"]}</p>`);
+        display.innerHTML = `
+          <div class="d-flex align-items-start">
+            ${
+              imagePath
+                ? `<img src="${imagePath}" alt="${data.food_item}" class="me-3 rounded" style="width: 150px; height: auto;">`
+                : ''
+            }
+            <div>
+              <h5 class="fw-bold mb-2">${data.food_item}</h5>
+              <p class="mb-2">${data.description}</p>
+              ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-2">${data.weird}</p>` : ''}
+              ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-2">${data.magical}</p>` : ''}
+            </div>
+          </div>
+        `;
 
-        if (data["Weird Side Effect"]) {
-          output.push(`<hr><p><strong>🌀 Weird Side Effect:</strong> ${data["Weird Side Effect"]}</p>`);
-        }
-
-        if (data["Magical Side Effect"]) {
-          output.push(`<hr><p><strong>✨ Magical Side Effect:</strong> ${data["Magical Side Effect"]}</p>`);
-        }
-
-        display.innerHTML = output.join("");
         display.classList.remove("d-none");
         display.classList.add("show");
       }
     } catch (err) {
-      console.error("Error fetching food:", err);
-      const display = document.getElementById("foodDisplay");
-      display.innerHTML = `<p class="text-danger">⚠️ Something went wrong loading your magical meal.</p>`;
-      display.classList.remove("d-none");
+      console.error("Error fetching food item:", err);
     }
   });
 </script>
+
 
 {% endblock %}

@@ -21,18 +21,6 @@
       </div>
     </div>
 
-    <!-- Rumor checkbox -->
-    <div class="row justify-content-center mb-3">
-      <div class="col-md-4 text-start">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="includeRumor">
-          <label class="form-check-label" for="includeRumor">
-            Include Rumor
-          </label>
-        </div>
-      </div>
-    </div>
-
     <!-- Generate button -->
     <div class="row justify-content-center mb-4">
       <div class="col-md-4 text-center">
@@ -49,21 +37,20 @@
 
 {% block scripts %}
 {{ super() }}
+
 <script>
   document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
     const biome = document.getElementById("biome").value;
-    const rumor = document.getElementById("includeRumor").checked;
 
     try {
-      const res = await fetch(`/landmark?biome=${biome}&rumor=${rumor}`);
-      const data = await res.json();
+      const response = await fetch(`/landmark?biome=${biome}`);
+      const data = await response.json();
 
       const display = document.getElementById("landmarkDisplay");
       if (display) {
         display.innerHTML = `
           <h5 class="fw-bold mb-3">${data.landmark}</h5>
           ${data.biome ? `<p class="mb-1"><strong>Biome:</strong> ${data.biome}</p>` : ""}
-          ${data.rumor ? `<hr><p class="fst-italic text-muted">🗣️ Rumor: ${data.rumor}</p>` : ""}
         `;
         display.classList.remove("d-none");
         display.classList.add("show");
@@ -73,4 +60,6 @@
     }
   });
 </script>
+
+
 {% endblock %}

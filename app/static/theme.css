@@ -129,6 +129,11 @@ a:hover {
   margin-right: auto;
 }
 
+.encounter-card img {
+  max-width: 150px;
+  border-radius: 0.5rem;
+}
+
 
 /* -----------------------------------
    📜 Lore Sidebar

@@ -126,17 +126,19 @@ def get_random_food(include_weird=False, include_magical=False):
     food = random.choice(data)
 
     result = {
-        "Food Item": food.get("Food Item", ""),
-        "Description": food.get("Description", "")
+        "food_item": food.get("Food Item", ""),
+        "description": food.get("Description", ""),
+        "picture_file_name": food.get("Picture File Name", "")
     }
 
     if include_weird:
-        result["Weird Side Effect"] = food.get("Weird Side Effect", "")
+        result["weird"] = food.get("Weird Side Effect", "")
 
     if include_magical:
-        result["Magical Side Effect"] = food.get("Magical Side Effect", "")
+        result["magical"] = food.get("Magical Side Effect", "")
 
     return result
+
 
 # === Landmarks ===
 def get_random_landmark(biome=None):
@@ -170,7 +172,6 @@ def get_random_landmark(biome=None):
         "landmark": random.choice(landmarks),
         "biome": biome
     }
-
 
 # === Rumors ===
 def get_random_rumor():
@@ -209,7 +210,6 @@ def get_room_dress():
     }
 
     return result
-
 
 # === Shop System ===
 def get_random_shop_items(store_type, count):
