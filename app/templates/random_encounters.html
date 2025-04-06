@@ -13,14 +13,6 @@
           <option value="Town">Town</option>
         </select>
       </div>
-      <div class="col-md-3">
-        <select id="difficulty" class="form-select">
-          <option value="">Any Difficulty</option>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-        </select>
-      </div>
     </div>
 
     <button id="generateEncounterBtn" class="mb-4">
@@ -33,13 +25,13 @@
 
 {% block scripts %}
 {{ super() }}
+
 <script>
   document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
     const biome = document.getElementById("biome").value;
-    const difficulty = document.getElementById("difficulty").value;
 
     try {
-      const res = await fetch(`/random-encounter?biome=${biome}&difficulty=${difficulty}`);
+      const res = await fetch(`/random-encounter?biome=${biome}`);
       const data = await res.json();
 
       const display = document.getElementById("encounterDisplay");
@@ -56,4 +48,5 @@
     }
   });
 </script>
+
 {% endblock %}

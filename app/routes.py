@@ -98,12 +98,12 @@ def random_encounters():
 @main.route("/random-encounter")
 @safe_json
 def random_encounter():
-    biome = request.args.get("biome")
-    difficulty = request.args.get("difficulty")
+    biome = request.args.get("biome")  
     return jsonify({
-        "encounter": get_random_encounter(biome, difficulty),
+        "encounter": get_random_encounter(biome),
         "flavor": get_flavor_text()
     })
+
 
 @main.route("/lore")
 @safe_json
@@ -188,3 +188,4 @@ def test_auth():
         return jsonify({"status": "✅ Success", "sheet_title": title})
     except Exception as e:
         return jsonify({"status": "❌ Failed", "error": str(e)}), 500
+    

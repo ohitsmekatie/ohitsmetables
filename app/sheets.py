@@ -50,7 +50,7 @@ def get_clean_records(worksheet):
     return clean_record_keys(raw)
 
 # === Encounter Generator ===
-def get_random_encounter(biome=None, difficulty=None):
+def get_random_encounter(biome=None):
     sheet = authorize_sheets().worksheet("Encounters")
     raw_data = sheet.get_all_values()
 
@@ -66,19 +66,18 @@ def get_random_encounter(biome=None, difficulty=None):
         return val.strip().lower() if isinstance(val, str) else val
 
     biome = normalize(biome)
-    difficulty = normalize(difficulty)
 
     filtered = [
         row.get("Encounter", "").strip()
         for row in records
         if row.get("Encounter")
         and (not biome or normalize(row.get("Biome")) == biome)
-        and (not difficulty or normalize(row.get("Difficulty")) == difficulty)
     ]
 
     if not filtered:
         return "No encounters match your criteria."
     return random.choice(filtered)
+
 
 # === Lore ===
 def get_random_lore(num_items=5):
