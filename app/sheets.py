@@ -22,6 +22,7 @@ SHOP_SHEET_ID = "1R4chFy9edh8Ao6zs9WX5o03nDmwYN9xJWl0ONVOfqH8"
 # scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 # creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH, scopes=SCOPES)
 
+# gets credentials for reading in and authorizing google sheets 
 def get_creds():
     raw = os.getenv("GOOGLE_CREDENTIALS_JSON")
     info = json.loads(raw)
@@ -35,19 +36,21 @@ def authorize_sheets(spreadsheet_id=None):
     if spreadsheet_id:
         return client.open_by_key(spreadsheet_id)
     else:
-        # fallback to your default content sheet
+        # fallback to default content sheet
         return client.open_by_key("1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4") 
 
-
+# function to clean titles in case i accidentally put a space in them 
 def clean_record_keys(data):
     return [
         {k.strip().title(): v for k, v in row.items()}
         for row in data
     ]
 
+
 def get_clean_records(worksheet):
     raw = worksheet.get_all_records()
     return clean_record_keys(raw)
+    
 
 # === Encounter Generator ===
 def get_random_encounter(biome=None):
@@ -77,7 +80,6 @@ def get_random_encounter(biome=None):
     if not filtered:
         return "No encounters match your criteria."
     return random.choice(filtered)
-
 
 # === Lore ===
 def get_random_lore(num_items=5):
@@ -112,8 +114,6 @@ def get_random_character():
     chosen["Picture File Name"] = chosen.get("Picture File Name", "").strip()
     return chosen
 
-
-   
 # === Food ===
 def get_random_food(include_weird=False, include_magical=False):
     sheet = authorize_sheets().worksheet("Food")
@@ -138,8 +138,8 @@ def get_random_food(include_weird=False, include_magical=False):
 
     return result
 
-
 # === Landmarks ===
+
 def get_random_landmark(biome=None):
     sheet = authorize_sheets().worksheet("Landmarks")
     raw_data = sheet.get_all_values()
@@ -173,6 +173,7 @@ def get_random_landmark(biome=None):
     }
 
 # === Rumors ===
+
 def get_random_rumor():
     sheet = authorize_sheets().worksheet("Rumors")
     lines = sheet.col_values(1)
@@ -210,7 +211,7 @@ def get_room_dress():
 
     return result
 
-# === Shop System ===
+# === Shop system ===
 def get_random_shop_items(store_type, count):
     sheet = authorize_sheets(SHOP_SHEET_ID).worksheet(store_type)
     data = get_clean_records(sheet)
