@@ -1,6 +1,7 @@
 /* -----------------------------------
    🧙 Typography & Base Layout
 ----------------------------------- */
+
 body {
   background-color: #1e1b2e;
   color: #f3f3f3;
@@ -17,7 +18,7 @@ body {
 }
 
 a {
-  color: #0DCAF0; 
+  color: #0DCAF0;
   text-decoration: none;
 }
 
@@ -30,6 +31,7 @@ a:hover {
 /* -----------------------------------
    🔮 Mystic Button Style (Shared)
 ----------------------------------- */
+
 .mystic-btn {
   background: linear-gradient(145deg, #6d28d9, #9333ea);
   color: #fff;
@@ -82,6 +84,7 @@ a:hover {
 /* -----------------------------------
    🌀 Animations for Landing Page
 ----------------------------------- */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -115,6 +118,7 @@ a:hover {
 /* -----------------------------------
    🗺️ Encounter / Card Style
 ----------------------------------- */
+
 .encounter-card {
   background-color: #2a2139;
   border: 2px solid #8b5cf6;
@@ -124,8 +128,8 @@ a:hover {
   font-family: 'Crimson Pro', serif;
   color: #f4f4f4;
 
-  max-width: 720px;        
-  margin-left: auto;       
+  max-width: 720px;
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -138,6 +142,7 @@ a:hover {
 /* -----------------------------------
    📜 Lore Sidebar
 ----------------------------------- */
+
 .lore-sidebar {
   position: fixed;
   top: 100px;
@@ -163,6 +168,7 @@ a:hover {
 /* -----------------------------------
    🧭 Footer
 ----------------------------------- */
+
 footer a:hover {
   color: #a78bfa;
   text-decoration: none;
@@ -226,7 +232,7 @@ footer a:hover {
 }
 
 /* -----------------------------------
-   Room results 
+   Room results
 ----------------------------------- */
 
 #roomResult ul {
@@ -251,6 +257,7 @@ footer a:hover {
    - Lore sidebar becomes collapsible/stacked on small screens
    - Encounter card spacing tweaks
 ===================== */
+
 @media (max-width: 767.98px) {
   .lore-sidebar {
     position: static;

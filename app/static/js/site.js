@@ -4,6 +4,7 @@
  * - fadeIn helper for cards (if desired)
  * - lore sidebar mobile toggle
  */
+
 (function() {
   // Lore Sidebar: add a toggle button on small screens if .lore-sidebar exists
   function setupLoreSidebarToggle() {

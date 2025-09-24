@@ -53,6 +53,7 @@ def get_clean_records(worksheet):
 
 
 # === Encounter Generator ===
+
 def get_random_encounter(biome=None):
     sheet = authorize_sheets().worksheet("Encounters")
     raw_data = sheet.get_all_values()
@@ -82,6 +83,7 @@ def get_random_encounter(biome=None):
     return random.choice(filtered)
 
 # === Lore ===
+
 def get_random_lore(num_items=5):
     sheet = authorize_sheets().worksheet("Lore")
     entries = sheet.col_values(1)
@@ -95,6 +97,7 @@ def get_flavor_text():
     return random.choice(lines) if lines else ""
 
 # === Characters ===
+
 def get_random_character():
     sheet = authorize_sheets().worksheet("Characters")
     raw_data = sheet.get_all_values()
@@ -115,6 +118,7 @@ def get_random_character():
     return chosen
 
 # === Food ===
+
 def get_random_food(include_weird=False, include_magical=False):
     sheet = authorize_sheets().worksheet("Food")
     data = get_clean_records(sheet)
@@ -187,6 +191,7 @@ def get_random_rumors(count=3):
     return random.sample(values, min(count, len(values)))
 
 # === Room Dressing ===
+
 def get_room_dress():
     include_treasure = request.args.get("treasure") == "true"
     include_trap = request.args.get("trap") == "true"
@@ -212,6 +217,7 @@ def get_room_dress():
     return result
 
 # === Shop system ===
+
 def get_random_shop_items(store_type, count):
     sheet = authorize_sheets(SHOP_SHEET_ID).worksheet(store_type)
     data = get_clean_records(sheet)
