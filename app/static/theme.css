@@ -243,3 +243,46 @@ footer a:hover {
 /* -----------------------------------
    🔧 Utility Classes
 ----------------------------------- */
+
+
+
+/* =====================
+   📱 Mobile Enhancements
+   - Lore sidebar becomes collapsible/stacked on small screens
+   - Encounter card spacing tweaks
+===================== */
+@media (max-width: 767.98px) {
+  .lore-sidebar {
+    position: static;
+    width: 100%;
+    right: auto;
+    top: auto;
+    margin: 1rem 0;
+    display: block;
+  }
+  .lore-sidebar.collapsed {
+    display: none;
+  }
+  .lore-toggle-btn {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1100;
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+  }
+  .encounter-card {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  #generateEncounterBtn {
+    width: 100%;
+  }
+  .form-select, .form-control {
+    width: 100%;
+  }
+}

@@ -8,7 +8,7 @@ import random
 from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 from .sheets import get_creds
-from zoneinfo import ZoneInfo 
+from zoneinfo import ZoneInfo
 
 from .sheets import (
     authorize_sheets,
@@ -53,7 +53,7 @@ def get_last_updated():
             ["git", "log", "-1", "--format=%cd", "--date=iso"],
             stderr=subprocess.DEVNULL
         ).decode("utf-8").strip()
-        
+
         dt = datetime.fromisoformat(result)
         return dt.strftime("%B %d, %Y at %I:%M %p")
     except Exception as e:
@@ -98,7 +98,7 @@ def random_encounters():
 @main.route("/random-encounter")
 @safe_json
 def random_encounter():
-    biome = request.args.get("biome")  
+    biome = request.args.get("biome")
     return jsonify({
         "encounter": get_random_encounter(biome),
         "flavor": get_flavor_text()

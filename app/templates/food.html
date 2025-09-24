@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{# Food Generator - uses the same row/col grid as landmarks for consistent centering #}
 {% block content %}
   <div class="text-center">
     <h1 class="mb-4 display-5">
@@ -38,30 +39,30 @@
 {{ super() }}
 
 <script>
-  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
-    const includeWeird = document.getElementById("includeWeird").checked;
-    const includeMagical = document.getElementById("includeMagical").checked;
+// Food generator: fetches /food-item and renders into the encounter-card
+document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
+  const includeWeird = document.getElementById("includeWeird").checked;
+  const includeMagical = document.getElementById("includeMagical").checked;
 
-    try {
-      const response = await fetch(`/food-item?weird=${includeWeird}&magical=${includeMagical}`);
-      if (!response.ok) throw new Error(await response.text());
+  try {
+    const response = await fetch(`/food-item?weird=${includeWeird}&magical=${includeMagical}`);
+    if (!response.ok) throw new Error(await response.text());
 
-      const data = await response.json();
-      const display = document.getElementById("foodDisplay");
+    const data = await response.json();
+    const display = document.getElementById("foodDisplay");
 
-      display.innerHTML = `
-        <h5 class="fw-bold mb-3">${data.food_item}</h5>
-        <p class="mb-3">${data.description}</p>
-        ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-3">${data.weird}</p>` : ""}
-        ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-3">${data.magical}</p>` : ""}
-      `;
+    display.innerHTML = `
+      <h5 class="fw-bold mb-3">${data.food_item}</h5>
+      <p class="mb-3">${data.description}</p>
+      ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-3">${data.weird}</p>` : ""}
+      ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-3">${data.magical}</p>` : ""}
+    `;
 
-      display.classList.remove("d-none");
-      display.classList.add("show");
-    } catch (err) {
-      console.error("Error fetching food item:", err);
-    }
-  });
+    display.classList.remove("d-none");
+    display.classList.add("show");
+  } catch (err) {
+    console.error("Error fetching food item:", err);
+  }
+});
 </script>
 {% endblock %}
-
