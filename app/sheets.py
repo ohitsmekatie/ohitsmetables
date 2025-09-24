@@ -1,10 +1,10 @@
-# all the functions to get data from the google sheets 
+# all the functions to get data from the google sheets
 
 from google.oauth2.service_account import Credentials
 import gspread
 import random
 import logging
-from flask import jsonify, request 
+from flask import jsonify, request
 import os
 import json
 
@@ -22,7 +22,7 @@ SHOP_SHEET_ID = "1R4chFy9edh8Ao6zs9WX5o03nDmwYN9xJWl0ONVOfqH8"
 # scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 # creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH, scopes=SCOPES)
 
-# gets credentials for reading in and authorizing google sheets 
+# gets credentials for reading in and authorizing google sheets
 def get_creds():
     raw = os.getenv("GOOGLE_CREDENTIALS_JSON")
     info = json.loads(raw)
@@ -30,16 +30,16 @@ def get_creds():
 
 def authorize_sheets(spreadsheet_id=None):
     scope =  ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = get_creds() 
+    creds = get_creds()
     client = gspread.authorize(creds)
 
     if spreadsheet_id:
         return client.open_by_key(spreadsheet_id)
     else:
         # fallback to default content sheet
-        return client.open_by_key("1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4") 
+        return client.open_by_key("1rYVBYbfByR-M4G-WQiDmIkHyGsgRVGUnmwFaQsaNRO4")
 
-# function to clean titles in case i accidentally put a space in them 
+# function to clean titles in case i accidentally put a space in them
 def clean_record_keys(data):
     return [
         {k.strip().title(): v for k, v in row.items()}
@@ -50,7 +50,7 @@ def clean_record_keys(data):
 def get_clean_records(worksheet):
     raw = worksheet.get_all_records()
     return clean_record_keys(raw)
-    
+
 
 # === Encounter Generator ===
 def get_random_encounter(biome=None):
