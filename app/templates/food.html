@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="text-center">
+  <div class="container text-center">
     <h1 class="mb-4 display-5">
       <i class="fas fa-drumstick-bite me-2"></i> Food Generator
     </h1>
@@ -16,12 +16,12 @@
     </div>
 
     <div class="mt-4">
-      <button id="generateEncounterBtn" class="mb-4 ">
+      <button id="generateEncounterBtn" class="btn btn-primary mb-4">
         <i class="fas fa-wand-sparkles me-2"></i> Generate Food
       </button>
     </div>
 
-    <div id="foodDisplay" class="encounter-card d-none mt-4"></div>
+    <div id="foodDisplay" class="d-none mt-4"></div>
   </div>
 {% endblock %}
 
@@ -45,22 +45,13 @@
       const display = document.getElementById("foodDisplay");
 
       if (display) {
-        const imagePath = data.picture_file_name
-          ? `/static/images/food/${data.picture_file_name}`
-          : null;
-
         display.innerHTML = `
-          <div class="d-flex align-items-start">
-            ${
-              imagePath
-                ? `<img src="${imagePath}" alt="${data.food_item}" class="me-3 rounded" style="width: 150px; height: auto;">`
-                : ''
-            }
-            <div>
-              <h5 class="fw-bold mb-2">${data.food_item}</h5>
-              <p class="mb-2">${data.description}</p>
-              ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-2">${data.weird}</p>` : ''}
-              ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-2">${data.magical}</p>` : ''}
+          <div class="d-flex justify-content-center">
+            <div class="card p-4 shadow text-center" style="max-width: 600px;">
+              <h5 class="fw-bold mb-3">${data.food_item}</h5>
+              <p class="mb-3">${data.description}</p>
+              ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-3">${data.weird}</p>` : ''}
+              ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-3">${data.magical}</p>` : ''}
             </div>
           </div>
         `;
@@ -73,6 +64,5 @@
     }
   });
 </script>
-
-
 {% endblock %}
+
