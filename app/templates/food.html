@@ -6,22 +6,31 @@
       <i class="fas fa-drumstick-bite me-2"></i> Food Generator
     </h1>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="includeWeird">
-      <label class="form-check-label" for="includeWeird">Weird Side Effect</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="includeMagical">
-      <label class="form-check-label" for="includeMagical">Magical Side Effect</label>
+    <!-- Options -->
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-4">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="includeWeird">
+          <label class="form-check-label" for="includeWeird">Weird Side Effect</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="includeMagical">
+          <label class="form-check-label" for="includeMagical">Magical Side Effect</label>
+        </div>
+      </div>
     </div>
 
-    <div class="mt-4">
-      <button id="generateEncounterBtn" class="btn btn-primary mb-4">
-        <i class="fas fa-wand-sparkles me-2"></i> Generate Food
-      </button>
+    <!-- Generate button -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-4 text-center">
+        <button id="generateEncounterBtn">
+          <i class="fas fa-wand-sparkles me-2"></i> Generate Food
+        </button>
+      </div>
     </div>
 
-    <div id="foodDisplay" class="d-none mt-4"></div>
+    <!-- Result display -->
+    <div id="foodDisplay" class="encounter-card text-center d-none mt-4"></div>
   </div>
 {% endblock %}
 
@@ -35,33 +44,24 @@
 
     try {
       const response = await fetch(`/food-item?weird=${includeWeird}&magical=${includeMagical}`);
-      if (!response.ok) {
-        const errText = await response.text();
-        console.error("Server error:", errText);
-        throw new Error(`Server responded with ${response.status}`);
-      }
+      if (!response.ok) throw new Error(await response.text());
 
       const data = await response.json();
       const display = document.getElementById("foodDisplay");
 
-      if (display) {
-        display.innerHTML = `
-          <div class="d-flex justify-content-center">
-            <div class="card p-4 shadow text-center" style="max-width: 600px;">
-              <h5 class="fw-bold mb-3">${data.food_item}</h5>
-              <p class="mb-3">${data.description}</p>
-              ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-3">${data.weird}</p>` : ''}
-              ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-3">${data.magical}</p>` : ''}
-            </div>
-          </div>
-        `;
+      display.innerHTML = `
+        <h5 class="fw-bold mb-3">${data.food_item}</h5>
+        <p class="mb-3">${data.description}</p>
+        ${data.weird ? `<hr><p class="fw-bold mb-1">🌀 Weird Side Effect</p><p class="mb-3">${data.weird}</p>` : ""}
+        ${data.magical ? `<hr><p class="fw-bold mb-1">✨ Magical Side Effect</p><p class="mb-3">${data.magical}</p>` : ""}
+      `;
 
-        display.classList.remove("d-none");
-        display.classList.add("show");
-      }
+      display.classList.remove("d-none");
+      display.classList.add("show");
     } catch (err) {
       console.error("Error fetching food item:", err);
     }
   });
 </script>
 {% endblock %}
+
