@@ -31,7 +31,7 @@
     const biome = document.getElementById("biome").value;
 
     try {
-      const res = await fetch(`/random-encounter?biome=${biome}`);
+      const res = await fetch(`/random-encounter?biome=${encodeURIComponent(biome)}`);
       const data = await res.json();
 
       const display = document.getElementById("encounterDisplay");
@@ -51,6 +51,7 @@
     }
   });
 </script>
+
 
 
 {% endblock %}

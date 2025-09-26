@@ -95,12 +95,9 @@ def random_encounters():
     return render_template("random_encounters.html")
 
 @main.route("/random-encounter")
-@safe_json
 def random_encounter():
-    biome = request.args.get("biome")
-    return jsonify({
-        "encounter": get_random_encounter(biome)
-    })
+    biome = request.args.get("biome") or None
+    return jsonify(get_random_encounter(biome))
 
 
 @main.route("/lore")
