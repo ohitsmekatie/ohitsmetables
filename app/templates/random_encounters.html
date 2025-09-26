@@ -35,23 +35,19 @@
       const data = await res.json();
 
       const display = document.getElementById("encounterDisplay");
-      if (display) {
-        // Make sure the container has your site’s card styles
-        display.classList.remove("d-none");
-        display.classList.add("show", "p-3"); // keep padding here, not via .card
+      if (!display) return;
 
-        // Render simple content so the container's existing styles apply
-        display.innerHTML = `
-          <h5 class="mb-2">${data.Encounter}</h5>
-          <p class="mt-2 mb-0">${data.Details || ""}</p>
-          <div class="mt-3 small text-muted"><strong>Biome:</strong> ${data.Biome || "Unknown"}</div>
-        `;
-      }
-    } catch (err) {
-      console.error("Error fetching encounter:", err);
-    }
+      const output = [];
+      output.push(`<h4 class="fw-bold mb-3">${data.Encounter}</h4>`);
+      if (data.Details) output.push(`<p class="mb-0">${data.Details}</p>`);
+      output.push(`<hr><div class="small text-muted"><strong>Biome:</strong> ${data.Biome || "Unknown"}</div>`);
+
+      display.innerHTML = output.join("");
+      display.classList.remove("d-none");
+      display.classList.add("show");
   });
 </script>
+
 
 
 
