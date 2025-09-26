@@ -55,7 +55,6 @@ document.getElementById("generateEncounterBtn").addEventListener("click", async 
     } else {
       const items = rumors.map(r => `<li>${r}</li>`).join("");
       display.innerHTML = `
-        <h5 class="fw-bold mb-3">Whispers &amp; Hearsay</h5>
         <ul class="mb-0">${items}</ul>
       `;
     }
@@ -68,4 +67,3 @@ document.getElementById("generateEncounterBtn").addEventListener("click", async 
 });
 </script>
 {% endblock %}
-
