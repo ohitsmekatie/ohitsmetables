@@ -72,15 +72,27 @@ def get_random_encounter(biome=None):
     biome = normalize(biome)
 
     filtered = [
-        row.get("Encounter", "").strip()
+        row
         for row in records
         if row.get("Encounter")
         and (not biome or normalize(row.get("Biome")) == biome)
     ]
 
     if not filtered:
-        return "No encounters match your criteria."
-    return random.choice(filtered)
+        return {
+            "Encounter": "No encounters match your criteria.",
+            "Details": "",
+            "Biome": ""
+        }
+
+    chosen = random.choice(filtered)
+    return {
+        "Encounter": chosen.get("Encounter", "").strip(),
+        "Details": chosen.get("Encounter Details", "").strip(),
+        "Biome": chosen.get("Biome", "").strip()
+    }
+
+
 
 # === Lore ===
 

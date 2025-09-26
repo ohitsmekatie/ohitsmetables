@@ -37,7 +37,11 @@
       const display = document.getElementById("encounterDisplay");
       if (display) {
         display.innerHTML = `
-          <div><h5 class="mb-3">${data.encounter}</h5></div>
+          <div class="card p-3">
+            <h5 class="mb-2">${data.Encounter}</h5>
+            <p class="mt-2">${data.Details || ""}</p>
+            <p class="text-muted mt-3"><strong>Biome:</strong> ${data.Biome || "Unknown"}</p>
+          </div>
         `;
         display.classList.remove("d-none");
         display.classList.add("show");
@@ -47,5 +51,6 @@
     }
   });
 </script>
+
 
 {% endblock %}
