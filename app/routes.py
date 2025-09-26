@@ -173,21 +173,17 @@ def generate_shop():
         print("🔥 Error in generate_shop:", e)
         return jsonify({"error": str(e)}), 500
 
-@main.route("/rumors-page")
-def rumors_page():
+# Page route (renders rumors.html)
+@main.route("/rumors")
+def rumors():
     return render_template("rumors.html")
 
-@main.route("/rumors")
-def rumors_api():
-    count = request.args.get("count", 3)
-    try:
-        rumors = get_random_rumors(count)
-        if not rumors:
-            return jsonify({"error": "No rumors found.", "rumors": []}), 200
-        return jsonify({"rumors": rumors})
-    except Exception as e:
-        return jsonify({"error": str(e), "rumors": []}), 500
-
+# JSON endpoint consumed by the page's JS
+@main.route("/rumors-list")
+@safe_json
+def rumors_list():
+    count = request.args.get("count", 3, type=int)
+    return jsonify({"rumors": get_random_rumors(count)})
 
 
 @main.route("/test-auth")

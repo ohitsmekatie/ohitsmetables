@@ -1,54 +1,71 @@
 {% extends "base.html" %}
 
+{# Rumor Generator - mirrors Food page structure/styles #}
 {% block content %}
   <div class="text-center">
-    <h1 class="mb-4 display-5"><i class="fas fa-comment-dots me-2"></i>Rumor Generator</h1>
+    <h1 class="mb-4 display-5">
+      <i class="fas fa-comments me-2"></i> Rumor Generator
+    </h1>
 
+    <!-- Options -->
     <div class="row justify-content-center mb-3">
-      <div class="col-md-3">
+      <div class="col-md-4">
+        <label for="rumorCount" class="form-label fw-bold">How many?</label>
         <select id="rumorCount" class="form-select form-select-magic">
-          <option value="1">1 Rumor</option>
-          <option value="3" selected>3 Rumors</option>
-          <option value="5">5 Rumors</option>
+          <option value="1">1</option>
+          <option value="3" selected>3</option>
+          <option value="5">5</option>
         </select>
       </div>
     </div>
 
-    <button id="generateEncounterBtn" class="btn-magic mb-4">
-      <i class="fas fa-wand-sparkles me-2"></i> Generate Rumors
-    </button>
+    <!-- Generate button -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-4 text-center">
+        <button id="generateEncounterBtn">
+          <i class="fas fa-wand-sparkles me-2"></i> Generate Rumors
+        </button>
+      </div>
+    </div>
 
-    <div id="rumorDisplay" class="encounter-card result-card d-none mt-4"></div>
+    <!-- Result display -->
+    <div id="rumorDisplay" class="encounter-card text-start d-none mt-4"></div>
   </div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
+
 <script>
-  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
-    const count = document.getElementById("rumorCount").value || 3;
-    try {
-      const res = await fetch(`/rumors?count=${encodeURIComponent(count)}`);
-      const data = await res.json();
+// Rumor generator: fetches /rumors-list and renders into the encounter-card
+document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
+  const count = document.getElementById("rumorCount").value || 3;
 
-      const display = document.getElementById("rumorDisplay");
-      if (!display) return;
+  try {
+    const response = await fetch(`/rumors-list?count=${encodeURIComponent(count)}`);
+    if (!response.ok) throw new Error(await response.text());
 
-      if (data.error) {
-        display.innerHTML = `<p class="text-danger">⚠️ ${data.error}</p>`;
-      } else {
-        const list = Array.isArray(data.rumors) ? data.rumors : [];
-        const items = list.map(r => `<li>${r}</li>`).join("");
-        display.innerHTML = `
-          <h4 class="fw-bold mb-3">Whispers & Hearsay</h4>
-          <ul class="text-start">${items}</ul>
-        `;
-      }
-      display.classList.remove("d-none");
-      display.classList.add("show");
-    } catch (err) {
-      console.error("Error fetching rumors:", err);
+    const data = await response.json();
+    const display = document.getElementById("rumorDisplay");
+
+    // Normalize payload
+    const rumors = Array.isArray(data.rumors) ? data.rumors : [];
+    if (rumors.length === 0) {
+      display.innerHTML = `<p class="mb-0">No rumors found.</p>`;
+    } else {
+      const items = rumors.map(r => `<li>${r}</li>`).join("");
+      display.innerHTML = `
+        <h5 class="fw-bold mb-3">Whispers &amp; Hearsay</h5>
+        <ul class="mb-0">${items}</ul>
+      `;
     }
-  });
+
+    display.classList.remove("d-none");
+    display.classList.add("show");
+  } catch (err) {
+    console.error("Error fetching rumors:", err);
+  }
+});
 </script>
 {% endblock %}
+
