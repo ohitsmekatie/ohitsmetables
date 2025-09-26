@@ -1,154 +1,295 @@
+/* -----------------------------------
+   🧙 Typography & Base Layout
+----------------------------------- */
 
-
-:root{
-  /* Palette */
-  --bg: #1e1b2e;
-  --panel: #2a2139;
-  --text: #f3f3f3;
-  --muted: rgba(255,255,255,0.65);
-  --primary: #8b5cf6;        /* violet-500 */
-  --primary-600: #7c3aed;    /* deeper violet */
-  --accent: #eab308;         /* amber */
-  --border: rgba(255,255,255,0.08);
-  --shadow: 0 0 15px rgba(139, 92, 246, 0.35);
-
-  /* Radii & spacing */
-  --radius: 1rem;
-  --radius-pill: 50px;
-  --pad: 1rem;
-  --pad-lg: 1.5rem;
-
-  /* Typography */
-  --font-serif: 'Crimson Pro', serif;
+body {
+  background-color: #1e1b2e;
+  color: #f3f3f3;
+  font-family: 'Crimson Pro', serif;
 }
 
-html, body{
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-serif);
+.text-shadow-light {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-/* ------------------------------
-   Typography helpers
------------------------------- */
-.text-muted{ color: var(--muted) !important; }
-.page-title{ letter-spacing: .5px; }
-hr{ border-color: var(--border); opacity: 1; }
+/* Override Bootstrap text-muted for dark backgrounds */
+.text-muted {
+  color: #d3d3d3 !important;
+}
 
-/* ------------------------------
-   Reusable Card
-   (applies to legacy .encounter-card and new .result-card)
------------------------------- */
-.encounter-card,
-.result-card{
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--pad-lg);
-  box-shadow: var(--shadow);
+a {
+  color: #0DCAF0;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #eab308;
+  text-decoration: none;
+}
+
+
+/* -----------------------------------
+   🔮 Mystic Button Style (Shared)
+----------------------------------- */
+
+.mystic-btn {
+  background: linear-gradient(145deg, #6d28d9, #9333ea);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #8b5cf6;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.mystic-btn:hover {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  box-shadow: 0 0 20px #eab308, 0 0 30px #8b5cf6;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+/* -----------------------------------
+   🔮 Mystic Button Style (Not Shared)
+----------------------------------- */
+
+.mystic-button {
+  background: linear-gradient(145deg, #6d28d9, #9333ea);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #8b5cf6;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.mystic-button:hover {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  box-shadow: 0 0 20px #eab308, 0 0 30px #8b5cf6;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+/* -----------------------------------
+   🌀 Animations for Landing Page
+----------------------------------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 1s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 1s ease-out 1s forwards;
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.2); opacity: 1; }
+}
+
+.animate-sparkles i {
+  animation: pulse 2.5s infinite alternate;
+}
+
+
+/* -----------------------------------
+   🗺️ Encounter / Card Style
+----------------------------------- */
+
+.encounter-card {
+  background-color: #2a2139;
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  font-family: 'Crimson Pro', serif;
+  color: #f4f4f4;
+
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--text);
 }
 
-/* ------------------------------
-   Magic Button (shared across pages)
------------------------------- */
-.btn-magic,
-button#generateEncounterBtn,
-.mystic-button{
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  border: 2px solid var(--primary);
-  border-radius: var(--radius-pill);
-  padding: .6rem 1.1rem;
-  font-weight: 600;
-  background: transparent;
-  color: var(--text);
-  box-shadow: 0 0 12px rgba(139,92,246,0.35);
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-}
-.btn-magic:hover,
-button#generateEncounterBtn:hover,
-.mystic-button:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 0 18px rgba(139,92,246,0.55);
-  background: rgba(139,92,246,0.1);
+.encounter-card img {
+  max-width: 150px;
+  border-radius: 0.5rem;
 }
 
-/* Disabled look */
-.btn-magic:disabled,
-button#generateEncounterBtn:disabled,
-.mystic-button:disabled{
-  opacity: .6;
-  cursor: not-allowed;
-  transform: none;
+
+/* -----------------------------------
+   📜 Lore Sidebar
+----------------------------------- */
+
+.lore-sidebar {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  width: 240px;
+  padding: 1.5rem;
+  background-color: #2a2139;
+  color: #f4f4f4;
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  z-index: 1000;
+  font-family: 'Crimson Pro', serif;
+  line-height: 1.6;
+  text-align: center;
 }
 
-/* ------------------------------
-   Form Controls
------------------------------- */
-.form-select,
-.form-select-magic{
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.form-select:focus,
-.form-select-magic:focus{
-  border-color: var(--primary);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(139,92,246,0.25);
+.lore-sidebar ul li {
+  margin-bottom: 0.5rem;
 }
 
-/* ------------------------------
-   Links
------------------------------- */
-a{
-  color: var(--accent);
+
+/* -----------------------------------
+   🧭 Footer
+----------------------------------- */
+
+footer a:hover {
+  color: #a78bfa;
   text-decoration: none;
 }
-a:hover{ text-decoration: underline; }
 
-/* ------------------------------
-   Nav / Footer
------------------------------- */
-.navbar{
-  background: linear-gradient(180deg, rgba(42,33,57,.9), rgba(30,27,46,.95));
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(4px);
-}
-.footer{
-  border-top: 1px solid var(--border);
-  color: var(--muted);
+.border-purple {
+  border-color: #8b5cf6 !important;
 }
 
-/* ------------------------------
-   Utilities
------------------------------- */
-.shadow-glow{ box-shadow: var(--shadow) !important; }
-.rounded-2xl{ border-radius: 1.25rem !important; }
-.max-w-720{ max-width: 720px; margin-inline: auto; }
-.center { text-align: center; }
-.hidden { display: none !important; }
-
-/* --------------------------------
-   Images inside cards
--------------------------------- */
-.result-card img,
-.encounter-card img{
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+.bg-purple {
+  background-color: #2a2139; !important;
 }
 
-/* --------------------------------
-   Headings inside cards
--------------------------------- */
-.result-card h4, .encounter-card h4,
-.result-card h5, .encounter-card h5{
-  margin-bottom: .75rem;
+
+/* -----------------------------------
+   Button
+----------------------------------- */
+
+#generateEncounterBtn {
+  background: linear-gradient(145deg, #6d28d9, #9333ea);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #8b5cf6;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.5px;
+}
+
+#generateEncounterBtn:hover {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  box-shadow: 0 0 20px #eab308, 0 0 30px #8b5cf6;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+/* -----------------------------------
+   Custom nav bar
+----------------------------------- */
+
+.navbar-purple {
+  background-color: #2a2139; !important; 
+  border-bottom: 2px solid #8b5cf6;
+}
+
+.navbar-purple .nav-link {
+  color: #f3f3f3 !important;
+}
+
+.navbar-purple .nav-link.active {
+  font-weight: bold;
+  color: #e0b3ff !important;
+}
+
+.navbar-purple .navbar-brand {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* -----------------------------------
+   Room results
+----------------------------------- */
+
+#roomResult ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+#roomResult li::before {
+  margin-right: 0.5rem;
+}
+
+
+/* -----------------------------------
+   🔧 Utility Classes
+----------------------------------- */
+
+
+
+/* =====================
+   📱 Mobile Enhancements
+   - Lore sidebar becomes collapsible/stacked on small screens
+   - Encounter card spacing tweaks
+===================== */
+
+@media (max-width: 767.98px) {
+  .lore-sidebar {
+    position: static;
+    width: 100%;
+    right: auto;
+    top: auto;
+    margin: 1rem 0;
+    display: block;
+  }
+  .lore-sidebar.collapsed {
+    display: none;
+  }
+  .lore-toggle-btn {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1100;
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+  }
+  .encounter-card {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  #generateEncounterBtn {
+    width: 100%;
+  }
+  .form-select, .form-control {
+    width: 100%;
+  }
 }
