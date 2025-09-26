@@ -14,7 +14,6 @@ from .sheets import (
     authorize_sheets,
     get_random_encounter,
     get_random_lore,
-    get_flavor_text,
     get_random_character,
     get_random_food,
     get_random_landmark,
@@ -100,8 +99,7 @@ def random_encounters():
 def random_encounter():
     biome = request.args.get("biome")
     return jsonify({
-        "encounter": get_random_encounter(biome),
-        "flavor": get_flavor_text()
+        "encounter": get_random_encounter(biome)
     })
 
 

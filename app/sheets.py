@@ -90,12 +90,6 @@ def get_random_lore(num_items=5):
     entries = [entry.strip() for entry in entries if entry.strip()]
     return random.sample(entries, min(num_items, len(entries)))
 
-def get_flavor_text():
-    sheet = authorize_sheets().worksheet("Flavor")
-    lines = sheet.col_values(1)
-    lines = [line.strip() for line in lines if line.strip()]
-    return random.choice(lines) if lines else ""
-
 # === Characters ===
 
 def get_random_character():
