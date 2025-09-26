@@ -238,5 +238,19 @@ def get_random_shop_items(store_type, count):
 
 def get_random_shopkeeper():
     sheet = authorize_sheets(SHOP_SHEET_ID).worksheet("Shopkeeper")
-    data = get_clean_records(sheet)
-    return random.choice(data) if data else None
+    rows = get_clean_records(sheet)  # returns list[dict] keyed by header names
+    if not rows:
+        return None
+    sk = random.choice(rows)
+
+    # Normalize keys coming from the sheet
+    first = sk.get("First Name", sk.get("first_name", "")).strip()
+    last = sk.get("Last Name", sk.get("last_name", "")).strip()
+    desc = sk.get("Description", sk.get("description", "")).strip()
+
+    return {
+        "first_name": first,
+        "last_name": last,
+        "description": desc,
+        "full_name": " ".join([p for p in [first, last] if p])
+    }

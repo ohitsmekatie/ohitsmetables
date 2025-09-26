@@ -72,37 +72,34 @@
           return;
         }
 
-        // Header
         html.push(`<h4 class="fw-bold mb-3">${data.store_type || type} — Inventory</h4>`);
 
-        // Items list
         const items = Array.isArray(data.items) ? data.items : [];
         if (items.length === 0) {
           html.push(`<p class="mb-0">No items available.</p>`);
         } else {
           html.push('<ul class="text-start">');
           items.forEach(it => {
-            // Support multiple possible keys
             const name = it["Item Name"] || it.name || "Unnamed Item";
             const desc = it["Description"] || it.description || "";
             const price = it["Price"] || it.price || "";
-            const priceTxt = price ? ` — <em>${price}</em>` : "";
+            const priceTxt = price ? ` — <span class="price"><em>${price}</em></span>` : "";
             const descTxt = desc ? `<div class="small text-muted">${desc}</div>` : "";
             html.push(`<li><strong>${name}</strong>${priceTxt}${descTxt}</li>`);
           });
           html.push('</ul>');
         }
 
-        // Shopkeeper (optional)
         if (data.shopkeeper) {
-          const sk = data.shopkeeper;
-          const skName = sk["Name"] || sk.name || "Mysterious Proprietor";
-          const skDesc = sk["Description"] || sk.description || "";
+          const { full_name, first_name, last_name, description } = data.shopkeeper;
+          const displayName = full_name || [first_name, last_name].filter(Boolean).join(" ") || "Mysterious Proprietor";
           html.push(`<hr>`);
-          html.push(`<div class="text-start">
-                      <p class="mb-1"><strong>Shopkeeper:</strong> ${skName}</p>
-                      ${skDesc ? `<p class="small text-muted mb-0">${skDesc}</p>` : ""}
-                    </div>`);
+          html.push(
+            `<div class="text-start">
+               <p class="mb-1"><strong>Shopkeeper:</strong> ${displayName}</p>
+               ${description ? `<p class="small text-muted mb-0">${description}</p>` : ""}
+             </div>`
+          );
         }
 
         out.innerHTML = html.join("");
@@ -117,4 +114,5 @@
       });
   }
 </script>
+
 {% endblock %}

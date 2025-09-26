@@ -157,21 +157,28 @@ def shops():
 
 @main.route("/generate-shop")
 def generate_shop():
-    store_type = request.args.get("type")
-    count = int(request.args.get("count", 5))
-    include_keeper = request.args.get("keeper") == "true"
-
     try:
-        items = get_random_shop_items(store_type, count)
-        keeper = get_random_shopkeeper() if include_keeper else None
+        type = request.args.get("type", "General")
+        count = request.args.get("count", 5, type=int)
+        keeper = request.args.get("keeper", "false").lower() == "true"
 
-        return jsonify({
+        items = get_random_shop_items(type, count)
+
+        payload = {
+            "store_type": type,
             "items": items,
-            "shopkeeper": keeper
-        })
+        }
+
+        if keeper:
+            sk = get_random_shopkeeper()
+            if sk:
+                payload["shopkeeper"] = sk  # has first_name, last_name, description, full_name
+
+        return jsonify(payload)
     except Exception as e:
         print("🔥 Error in generate_shop:", e)
         return jsonify({"error": str(e)}), 500
+
 
 # Page route (renders rumors.html)
 @main.route("/rumors")

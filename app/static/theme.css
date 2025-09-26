@@ -27,6 +27,12 @@ a:hover {
   text-decoration: none;
 }
 
+/* Accent price color */
+.price {
+  color: var(--accent, #eab308); /* amber */
+  font-weight: 600;
+}
+
 
 /* -----------------------------------
    🔮 Mystic Button Style (Shared)
@@ -293,3 +299,4 @@ footer a:hover {
     width: 100%;
   }
 }
+
