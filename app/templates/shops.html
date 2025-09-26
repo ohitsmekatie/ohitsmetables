@@ -91,13 +91,13 @@
         }
 
         if (data.shopkeeper) {
-          const { full_name, first_name, last_name, description } = data.shopkeeper;
-          const displayName = full_name || [first_name, last_name].filter(Boolean).join(" ") || "Mysterious Proprietor";
+          const { full_name, first_name, last_name, personality } = data.shopkeeper;
+          const displayName = full_name || [first_name, last_name].filter(Boolean).join(" ");
           html.push(`<hr>`);
           html.push(
             `<div class="text-start">
                <p class="mb-1"><strong>Shopkeeper:</strong> ${displayName}</p>
-               ${description ? `<p class="small text-muted mb-0">${description}</p>` : ""}
+               ${personality ? `<p class="small text-muted mb-0">${personality}</p>` : ""}
              </div>`
           );
         }

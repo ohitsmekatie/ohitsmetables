@@ -246,11 +246,11 @@ def get_random_shopkeeper():
     # Normalize keys coming from the sheet
     first = sk.get("First Name", sk.get("first_name", "")).strip()
     last = sk.get("Last Name", sk.get("last_name", "")).strip()
-    desc = sk.get("Description", sk.get("description", "")).strip()
+    desc = sk.get("Personality", sk.get("personality", "")).strip()
 
     return {
         "first_name": first,
         "last_name": last,
-        "description": desc,
+        "personality": desc,
         "full_name": " ".join([p for p in [first, last] if p])
     }
