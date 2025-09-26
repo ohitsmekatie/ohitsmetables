@@ -45,8 +45,12 @@
       display.innerHTML = output.join("");
       display.classList.remove("d-none");
       display.classList.add("show");
+    } catch (err) {
+      console.error("Error fetching encounter:", err);
+    }
   });
 </script>
+
 
 
 
