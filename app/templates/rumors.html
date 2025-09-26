@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="text-center">
+    <h1 class="mb-4 display-5"><i class="fas fa-comment-dots me-2"></i>Rumor Generator</h1>
+
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-3">
+        <select id="rumorCount" class="form-select form-select-magic">
+          <option value="1">1 Rumor</option>
+          <option value="3" selected>3 Rumors</option>
+          <option value="5">5 Rumors</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="generateEncounterBtn" class="btn-magic mb-4">
+      <i class="fas fa-wand-sparkles me-2"></i> Generate Rumors
+    </button>
+
+    <div id="rumorDisplay" class="encounter-card result-card d-none mt-4"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  document.getElementById("generateEncounterBtn").addEventListener("click", async () => {
+    const count = document.getElementById("rumorCount").value || 3;
+    try {
+      const res = await fetch(`/rumors?count=${encodeURIComponent(count)}`);
+      const data = await res.json();
+
+      const display = document.getElementById("rumorDisplay");
+      if (!display) return;
+
+      if (data.error) {
+        display.innerHTML = `<p class="text-danger">⚠️ ${data.error}</p>`;
+      } else {
+        const list = Array.isArray(data.rumors) ? data.rumors : [];
+        const items = list.map(r => `<li>${r}</li>`).join("");
+        display.innerHTML = `
+          <h4 class="fw-bold mb-3">Whispers & Hearsay</h4>
+          <ul class="text-start">${items}</ul>
+        `;
+      }
+      display.classList.remove("d-none");
+      display.classList.add("show");
+    } catch (err) {
+      console.error("Error fetching rumors:", err);
+    }
+  });
+</script>
+{% endblock %}

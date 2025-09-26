@@ -185,16 +185,23 @@ def get_random_landmark(biome=None):
 # === Rumors ===
 
 def get_random_rumor():
+    """Return one random rumor from the Rumors sheet."""
     sheet = authorize_sheets().worksheet("Rumors")
-    lines = sheet.col_values(1)
-    lines = [line.strip() for line in lines if line.strip()]
+    lines = sheet.col_values(1)  # first column
+    lines = [line.strip() for line in lines if line and line.strip()]
     return random.choice(lines) if lines else None
 
+
 def get_random_rumors(count=3):
+    """Return up to `count` random rumors from the Rumors sheet."""
     sheet = authorize_sheets().worksheet("Rumors")
-    values = sheet.col_values(1)
-    values = [v.strip() for v in values if v.strip()]
+    values = sheet.col_values(1)  # first column
+    values = [v.strip() for v in values if v and v.strip()]
+    if not values:
+        return []
+    count = max(1, int(count))  # ensure positive integer
     return random.sample(values, min(count, len(values)))
+
 
 # === Room Dressing ===
 

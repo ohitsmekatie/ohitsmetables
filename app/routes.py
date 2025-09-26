@@ -164,16 +164,31 @@ def generate_shop():
     try:
         items = get_random_shop_items(store_type, count)
         keeper = get_random_shopkeeper() if include_keeper else None
-        rumors = get_random_rumors()
 
         return jsonify({
             "items": items,
-            "shopkeeper": keeper,
-            "rumors": rumors
+            "shopkeeper": keeper
         })
     except Exception as e:
         print("🔥 Error in generate_shop:", e)
         return jsonify({"error": str(e)}), 500
+
+@main.route("/rumors-page")
+def rumors_page():
+    return render_template("rumors.html")
+
+ @main.route("/rumors")
+def rumors_api():
+    count = request.args.get("count", 3)
+    try:
+        rumors = get_random_rumors(count)
+        if not rumors:
+            return jsonify({"error": "No rumors found.", "rumors": []}), 200
+        return jsonify({"rumors": rumors})
+    except Exception as e:
+        return jsonify({"error": str(e), "rumors": []}), 500
+
+
 
 @main.route("/test-auth")
 def test_auth():

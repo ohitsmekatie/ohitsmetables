@@ -2,97 +2,119 @@
 
 {% block content %}
 <div class="container text-center">
-    <h1 class="display-5 mb-4 text-shadow-light">
-        <i class="fas fa-store me-2"></i> Shop Generator
-    </h1>
+  <h1 class="display-5 mb-4 text-shadow-light">
+    <i class="fas fa-store me-2"></i> Shop Generator
+  </h1>
 
+  <!-- Controls -->
+  <div class="row justify-content-center g-3 mb-3">
+    <div class="col-auto">
+      <label for="storeType" class="form-label fw-bold mb-1">Store Type</label>
+      <select id="storeType" class="form-select form-select-magic w-auto">
+        <option value="Bakery">Bakery</option>
+        <option value="Magical">Magical</option>
+        <option value="General">General</option>
+        <option value="Weapons">Weapons</option>
+        <option value="Tavern">Tavern</option>
+      </select>
+    </div>
 
-  <!-- Store Type Dropdown -->
-  <div class="mb-3">
-    <label for="storeType" class="form-label fw-bold">Store Type:</label>
-    <select id="storeType" class="form-select w-auto mx-auto">
-      <option value="Bakery">Bakery</option>
-      <option value="Magical">Magical</option>
-      <option value="General">General</option>
-      <option value="Weapons">Weapons</option>
-      <option value="Tavern">Tavern</option>
-    </select>
+    <div class="col-auto">
+      <label for="itemCount" class="form-label fw-bold mb-1"># of Items</label>
+      <select id="itemCount" class="form-select form-select-magic w-auto">
+        <option value="3">3</option>
+        <option value="5" selected>5</option>
+        <option value="8">8</option>
+        <option value="12">12</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+
+    <div class="col-auto d-flex align-items-end">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="includeKeeper" checked>
+        <label class="form-check-label" for="includeKeeper">
+          Include Shopkeeper
+        </label>
+      </div>
+    </div>
   </div>
 
-  <!-- Item Count -->
-  <div class="mb-3">
-    <label for="itemCount" class="form-label fw-bold">Number of Items (between 1 & 20):</label>
-    <input type="number" id="itemCount" class="form-control w-auto mx-auto" min="1" max="20" value="5">
-  </div>
-
-<div class="form-check form-check-inline d-flex justify-content-center mb-4">
-    <input class="form-check-input me-2" type="checkbox" id="includeKeeper">
-    <label class="form-check-label fw-bold" for="includeKeeper">
-      Include a shopkeeper?
-    </label>
-  </div>
-
-  <!-- Generate Button -->
-  <button class="mystic-button" onclick="generateShop()">
-    <i class="fas fa-store me-2"></i> Generate Shop
+  <button class="mystic-button btn-magic mb-4" onclick="generateShop()">
+    <i class="fas fa-wand-sparkles me-2"></i> Generate Shop
   </button>
 
-  <!-- Output Area -->
-  <div id="shopOutput" class="mt-4 encounter-card p-4 text-start" style="display: none;"></div>
+  <!-- Results -->
+  <div id="shopOutput" class="encounter-card result-card d-none mt-4"></div>
 </div>
 {% endblock %}
 
-
 {% block scripts %}
 {{ super() }}
-
 <script>
-    function generateShop() {
-      const type = document.getElementById("storeType").value;
-      const count = document.getElementById("itemCount").value;
-      const keeper = document.getElementById("includeKeeper").checked;
+  function el(id){ return document.getElementById(id); }
 
-      fetch(`/generate-shop?type=${type}&count=${count}&keeper=${keeper}`)
-        .then(res => res.json())
-        .then(data => {
-          const outputEl = document.getElementById("shopOutput");
-          const output = [];
+  function generateShop() {
+    const type = el("storeType").value;
+    const count = el("itemCount").value;
+    const keeper = el("includeKeeper").checked;
 
-          if (data.error) {
-            outputEl.innerHTML = `<div class="text-danger">⚠️ ${data.error}</div>`;
-            outputEl.style.display = "block";
-            return;
-          }
+    fetch(`/generate-shop?type=${encodeURIComponent(type)}&count=${encodeURIComponent(count)}&keeper=${keeper}`)
+      .then(res => res.json())
+      .then(data => {
+        const out = el("shopOutput");
+        const html = [];
 
-          output.push(`<h5 class="fw-bold mb-3">🛒 ${type} Shop</h5>`);
-          data.items.forEach(item => {
-            output.push(
-              `<p><strong>${item["Item Name"]}</strong><br>${item.Description} <span class="text-info">(${item.Price})</span></p>`
-            );
+        if (data.error) {
+          html.push(`<p class="text-danger">❌ ${data.error}</p>`);
+          out.innerHTML = html.join("");
+          out.classList.remove("d-none");
+          return;
+        }
+
+        // Header
+        html.push(`<h4 class="fw-bold mb-3">${data.store_type || type} — Inventory</h4>`);
+
+        // Items list
+        const items = Array.isArray(data.items) ? data.items : [];
+        if (items.length === 0) {
+          html.push(`<p class="mb-0">No items available.</p>`);
+        } else {
+          html.push('<ul class="text-start">');
+          items.forEach(it => {
+            // Support multiple possible keys
+            const name = it["Item Name"] || it.name || "Unnamed Item";
+            const desc = it["Description"] || it.description || "";
+            const price = it["Price"] || it.price || "";
+            const priceTxt = price ? ` — <em>${price}</em>` : "";
+            const descTxt = desc ? `<div class="small text-muted">${desc}</div>` : "";
+            html.push(`<li><strong>${name}</strong>${priceTxt}${descTxt}</li>`);
           });
+          html.push('</ul>');
+        }
 
-          if (data.shopkeeper) {
-            output.push(`<hr><h5 class="fw-bold mt-4">🧙 Shopkeeper</h5>`);
-            for (const [key, value] of Object.entries(data.shopkeeper)) {
-              output.push(`<p><strong>${key}:</strong> ${value}</p>`);
-            }
-          }
+        // Shopkeeper (optional)
+        if (data.shopkeeper) {
+          const sk = data.shopkeeper;
+          const skName = sk["Name"] || sk.name || "Mysterious Proprietor";
+          const skDesc = sk["Description"] || sk.description || "";
+          html.push(`<hr>`);
+          html.push(`<div class="text-start">
+                      <p class="mb-1"><strong>Shopkeeper:</strong> ${skName}</p>
+                      ${skDesc ? `<p class="small text-muted mb-0">${skDesc}</p>` : ""}
+                    </div>`);
+        }
 
-          output.push(`<hr><h5 class="fw-bold mt-4">🗣️ Local Rumors</h5>`);
-          data.rumors.forEach(rumor => {
-            output.push(`<p>• ${rumor}</p>`);
-          });
-
-          outputEl.innerHTML = output.join("");
-          outputEl.style.display = "block";
-        })
-        .catch(err => {
-          const outputEl = document.getElementById("shopOutput");
-          outputEl.innerHTML = `<div class="text-danger">❌ An error occurred: ${err.message}</div>`;
-          outputEl.style.display = "block";
-          console.error("Fetch failed:", err);
-        });
-    }
-    </script>
-
+        out.innerHTML = html.join("");
+        out.classList.remove("d-none");
+        out.classList.add("show");
+      })
+      .catch(err => {
+        const out = el("shopOutput");
+        out.innerHTML = `<div class="text-danger">❌ An error occurred: ${err.message}</div>`;
+        out.classList.remove("d-none");
+        console.error("Fetch failed:", err);
+      });
+  }
+</script>
 {% endblock %}
