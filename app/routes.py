@@ -177,7 +177,7 @@ def generate_shop():
 def rumors_page():
     return render_template("rumors.html")
 
- @main.route("/rumors")
+@main.route("/rumors")
 def rumors_api():
     count = request.args.get("count", 3)
     try:
