@@ -9,7 +9,7 @@
     <!-- Biome dropdown -->
     <div class="row justify-content-center mb-3">
       <div class="col-md-4">
-        <select id="biome" class="form-select">
+        <select id="biome" class="form-select form-select-magic">
           <option value="">Any Biome</option>
           <option value="Forest">Forest</option>
           <option value="Swamp">Swamp</option>
@@ -24,14 +24,14 @@
     <!-- Generate button -->
     <div class="row justify-content-center mb-4">
       <div class="col-md-4 text-center">
-        <button id="generateEncounterBtn">
+        <button id="generateEncounterBtn" class="btn-magic >
           <i class="fas fa-wand-sparkles me-2"></i> Generate Landmark
         </button>
       </div>
     </div>
 
     <!-- Result display -->
-    <div id="landmarkDisplay" class="encounter-card d-none mt-4"></div>
+    <div id="landmarkDisplay" class="encounter-card result-card d-none mt-4"></div>
   </div>
 {% endblock %}
 
